@@ -1,18 +1,17 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by iFlyWebUi.rc
-//
+// Used by iFlyWebUi4.rc
 
 #define IDS_APP_TITLE			103
 
 #define IDR_MAINFRAME			128
-#define IDD_IFLYWEBUI_DIALOG	102
+#define IDD_IFLYWEBUI4_DIALOG	102
 #define IDD_ABOUTBOX			103
 #define IDM_ABOUT				104
 #define IDM_EXIT				105
-#define IDI_IFLYWEBUI			107
+#define IDI_IFLYWEBUI4			107
 #define IDI_SMALL				108
-#define IDC_IFLYWEBUI			109
+#define IDC_IFLYWEBUI4			109
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
@@ -92,12 +91,5 @@
 #define ID_WEBUI_BUTTON_VIRTUAL_KEY_7	(WM_APP+87)
 #define ID_WEBUI_BUTTON_VIRTUAL_KEY_8	(WM_APP+88)
 #define ID_WEBUI_BUTTON_VIRTUAL_KEY_9	(WM_APP+89)
-#define ID_WEBUI_BUTTON_VIRTUAL_KEY_F12	(WM_APP+90)
-
-// external process buttons
-
-#define ID_WEBUI_BUTTON_VIRTUAL_KEY_PROC1	(WM_APP+91)
-
-
-
-
+#define ID_WEBUI_BUTTON_VIRTUAL_KEY_F11	(WM_APP+90)
+#define ID_WEBUI_BUTTON_VIRTUAL_KEY_F12	(WM_APP+91)

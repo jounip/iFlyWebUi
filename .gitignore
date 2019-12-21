@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/resources
+/SDK737
+/SDK747
+/SimConnect
+/Fsuipc
+
