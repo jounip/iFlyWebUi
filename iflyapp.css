@@ -1,0 +1,78 @@
+html {
+  font-family:arial,sans-serif;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+h2, h3, h4, h5 {
+  color: #505050;
+}
+
+h2 {
+  padding-left: 30px;
+  border-bottom: 1px solid #000;
+}
+
+h2 span {
+  border-bottom: 0.2em solid #000;
+}
+
+
+button {
+  margin: 0px 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 200px;
+  height: 50px;
+}
+
+.gsxtext {
+  font-weight: bold;
+  font-size: 200%;
+  color: #FF0000;
+}
+
+.buttongsx {
+  min-width: 400px;
+  height: 50px;
+  margin: 10px 10px;
+}
+
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.fieldset-header {
+    border: 1px solid #A9D2F5;
+    padding: 10px;
+}
+
+.fieldset-header > legend {
+    width: auto;
+    border-bottom: 0px;
+    padding: 0px 5px;
+    margin-bottom: -5px;
+}
+
+.fieldset-header > p {
+    margin: 10px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.fieldset-header > span {
+    margin: 10px 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+

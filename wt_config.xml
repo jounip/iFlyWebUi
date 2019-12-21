@@ -1,0 +1,9 @@
+<server>
+    <application-settings location="*">
+	<web-sockets>true</web-sockets>
+	<progressive-bootstrap>false</progressive-bootstrap>
+	<properties>
+	    <property name="google_api_key">keyhere</property>
+	</properties>
+    </application-settings>
+</server>
