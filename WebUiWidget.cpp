@@ -70,16 +70,44 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
 
     // Setup default Weather text
     auto txtWxrMetarDep = Wt::cpp14::make_unique<Wt::WText>("DEPARTURE AIRPORT IS NOT SET");
-    auto txtWxrTafDep = Wt::cpp14::make_unique<Wt::WText>("DEPARTURE AIRPORT IS NOT SET");
+    auto txtWxrTafDep = Wt::cpp14::make_unique<Wt::WText>("");
     auto txtWxrMetarArr = Wt::cpp14::make_unique<Wt::WText>("ARRIVAL AIRPORT IS NOT SET");
-    auto txtWxrTafArr = Wt::cpp14::make_unique<Wt::WText>("ARRIVAL AIRPORT IS NOT SET");
+    auto txtWxrTafArr = Wt::cpp14::make_unique<Wt::WText>("");
+
+    // Setup default info text
+
+    auto txtAlt = Wt::cpp14::make_unique<Wt::WText>("32013");
+    auto txtSpeed = Wt::cpp14::make_unique<Wt::WText>("450");
+    auto txtTemperature = Wt::cpp14::make_unique<Wt::WText>("-55");
+    auto txtOnGround = Wt::cpp14::make_unique<Wt::WText>("No");
+
+    auto txtOut = Wt::cpp14::make_unique<Wt::WText>("18:02");
+    auto txtOff = Wt::cpp14::make_unique<Wt::WText>("18:07");
+    auto txtOn = Wt::cpp14::make_unique<Wt::WText>("21:33");
+    auto txtIn = Wt::cpp14::make_unique<Wt::WText>("21:29");
+
+    auto txtDestinationETA = Wt::cpp14::make_unique<Wt::WText>("23:59:03");
+    auto txtDestinationDTG = Wt::cpp14::make_unique<Wt::WText>("345");
+    auto txtDestinationFuel = Wt::cpp14::make_unique<Wt::WText>("2900");
+
+    auto txtLastName = Wt::cpp14::make_unique<Wt::WText>("ROVIL");
+    auto txtLastAlt = Wt::cpp14::make_unique<Wt::WText>("FL280");
+    auto txtLastATA = Wt::cpp14::make_unique<Wt::WText>("20:38:51");
+    auto txtLastFuel = Wt::cpp14::make_unique<Wt::WText>("4300");
+
+    auto txtActualName = Wt::cpp14::make_unique<Wt::WText>("TESTI");
+    auto txtActualETA = Wt::cpp14::make_unique<Wt::WText>("20:48:32");
+    auto txtActualFuel = Wt::cpp14::make_unique<Wt::WText>("4000");
+    auto txtActualDTG = Wt::cpp14::make_unique<Wt::WText>("23");
+
+    auto txtNextName = Wt::cpp14::make_unique<Wt::WText>("FIXME");
+    auto txtNextETA = Wt::cpp14::make_unique<Wt::WText>("21:02:22");
+    auto txtNextFuel = Wt::cpp14::make_unique<Wt::WText>("3700");
+    auto txtNextDTG = Wt::cpp14::make_unique<Wt::WText>("46");
+
 
     // Setup default GSX text
-    auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("");
-
-    // Setup default statustext
-    auto statustext = Wt::cpp14::make_unique<Wt::WText>("");
-
+    auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("GSX not found.");
 
     // Create Ground tab 
     auto groundBox = groundContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Ground Equipment"));
@@ -113,12 +141,192 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     wxrArrBox->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
     wxrArrBox->addWidget(std::move(txtWxrTafArr));
 
-    auto infoBox = infoContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("A group box"));
+    // Info tab starts here
+
+    auto vinfobox = infoContainer->setLayout(Wt::cpp14::make_unique<Wt::WVBoxLayout>());
+
+    auto hinforow1 = vinfobox->addLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+    auto hinforow2 = vinfobox->addLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    // Basic flightinfo
+
+    auto infoBox = hinforow1->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("NAX435 ( EFHK - EFRO )"));
     infoBox->addStyleClass("fieldset-header");
 
-    auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("A group box"));
+    auto flightinfocontainer = infoBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    auto flightinfocontainerLayout = flightinfocontainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    auto flightinfocontainer1 = flightinfocontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto flightinfocontainer2 = flightinfocontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto flightinfocontainer3 = flightinfocontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto flightinfocontainer4 = flightinfocontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+
+    flightinfocontainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Alt:"));
+    flightinfocontainer1->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    flightinfocontainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Speed:"));
+    flightinfocontainer2->addWidget(std::move(txtAlt));
+    flightinfocontainer2->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    flightinfocontainer2->addWidget(std::move(txtSpeed));
+    flightinfocontainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("Temp:"));
+    flightinfocontainer3->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    flightinfocontainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("On ground:"));
+    flightinfocontainer4->addWidget(std::move(txtTemperature));
+    flightinfocontainer4->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    flightinfocontainer4->addWidget(std::move(txtOnGround));
+
+    // OOOI
+
+    auto oooiBox = hinforow1->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("OOOI"));
+    oooiBox->addStyleClass("fieldset-header");
+
+    auto oooicontainer = oooiBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    auto oooicontainerLayout = oooicontainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    auto oooicontainer1 = oooicontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto oooicontainer2 = oooicontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto oooicontainer3 = oooicontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto oooicontainer4 = oooicontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    oooicontainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Out:"));
+    oooicontainer1->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    oooicontainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Off:"));
+    oooicontainer2->addWidget(std::move(txtOut));
+    oooicontainer2->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    oooicontainer2->addWidget(std::move(txtOff));
+    oooicontainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("On:"));
+    oooicontainer3->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    oooicontainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("In:"));
+    oooicontainer4->addWidget(std::move(txtOn));
+    oooicontainer4->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    oooicontainer4->addWidget(std::move(txtIn));
+
+    // Destination
+
+    auto destinationBox = hinforow1->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Destination"));
+    destinationBox->addStyleClass("fieldset-header");
+
+    auto destinationcontainer = destinationBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    auto destinationcontainerLayout = destinationcontainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    auto destinationcontainer1 = destinationcontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto destinationcontainer2 = destinationcontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto destinationcontainer3 = destinationcontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto destinationcontainer4 = destinationcontainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+
+    destinationcontainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("ETA:"));
+    destinationcontainer1->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    destinationcontainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("DTG:"));
+    destinationcontainer2->addWidget(std::move(txtDestinationETA));
+    destinationcontainer2->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    destinationcontainer2->addWidget(std::move(txtDestinationDTG));
+    destinationcontainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("Fuel:"));
+    destinationcontainer4->addWidget(std::move(txtDestinationFuel));
+
+    // last waypoint
+
+    auto progressLastBox = hinforow2->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Last WPT"));
+    progressLastBox->addStyleClass("fieldset-header");
+
+    auto lastWptContainer = progressLastBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    auto lastWptContainerLayout = lastWptContainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    auto lastWptContainer1 = lastWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto lastWptContainer2 = lastWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto lastWptContainer3 = lastWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto lastWptContainer4 = lastWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    lastWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Name:"));
+    lastWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    lastWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("ATA:"));
+    lastWptContainer2->addWidget(std::move(txtLastName));
+    lastWptContainer2->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    lastWptContainer2->addWidget(std::move(txtLastATA));
+    lastWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("Fuel:"));
+    lastWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    lastWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("Alt:"));
+    lastWptContainer4->addWidget(std::move(txtLastFuel));
+    lastWptContainer4->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    lastWptContainer4->addWidget(std::move(txtLastAlt));
+
+    // Actual waypoint
+
+    auto progressActBox = hinforow2->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Actual WPT"));
+    progressActBox->addStyleClass("fieldset-header");
+
+    auto actualWptContainer = progressActBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    auto actualWptContainerLayout = actualWptContainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    auto actualWptContainer1 = actualWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto actualWptContainer2 = actualWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto actualWptContainer3 = actualWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto actualWptContainer4 = actualWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    actualWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Name:"));
+    actualWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    actualWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("ETA:"));
+    actualWptContainer2->addWidget(std::move(txtActualName));
+    actualWptContainer2->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    actualWptContainer2->addWidget(std::move(txtActualETA));
+    actualWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("Fuel:"));
+    actualWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    actualWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("DTG:"));
+    actualWptContainer4->addWidget(std::move(txtActualFuel));
+    actualWptContainer4->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    actualWptContainer4->addWidget(std::move(txtActualDTG));
+
+    // Next waypoint
+
+    auto progressNextBox = hinforow2->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Next WPT"));
+    progressNextBox->addStyleClass("fieldset-header");
+
+    auto nextWptContainer = progressNextBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    auto nextWptContainerLayout = nextWptContainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
+
+    auto nextWptContainer1 = nextWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto nextWptContainer2 = nextWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto nextWptContainer3 = nextWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    auto nextWptContainer4 = nextWptContainerLayout->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+
+    nextWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("Name:"));
+    nextWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    nextWptContainer1->addWidget(Wt::cpp14::make_unique<Wt::WText>("ETA:"));
+    nextWptContainer2->addWidget(std::move(txtNextName));
+    nextWptContainer2->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    nextWptContainer2->addWidget(std::move(txtNextETA));
+    nextWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("Fuel:"));
+    nextWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    nextWptContainer3->addWidget(Wt::cpp14::make_unique<Wt::WText>("DTG:"));
+    nextWptContainer4->addWidget(std::move(txtNextFuel));
+    nextWptContainer4->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    nextWptContainer4->addWidget(std::move(txtNextDTG));
+
+    // GSX Tab starts here
+
+    auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("GSX Menu"));
     GSXBox->addStyleClass("fieldset-header");
 
+    auto gsxTable = GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WTable>());
+    gsxTable->setWidth(Wt::WLength("100%"));
+
+    gsxTable->elementAt(0, 0)->addWidget(std::move(btnVirtualKey1));
+    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKey2));
+    gsxTable->elementAt(0, 2)->addWidget(std::move(btnVirtualKey3));
+    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey4));
+    gsxTable->elementAt(1, 1)->addWidget(std::move(btnVirtualKey5));
+    gsxTable->elementAt(1, 2)->addWidget(std::move(btnVirtualKey6));
+    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey7));
+    gsxTable->elementAt(2, 1)->addWidget(std::move(btnVirtualKey8));
+    gsxTable->elementAt(2, 2)->addWidget(std::move(btnVirtualKey9));
+    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey0));
+    gsxTable->elementAt(3, 2)->addWidget(std::move(btnVirtualKeyF12));
 
 
     // Create 3 main containers from top to bottom.
@@ -128,7 +336,7 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto statusContainer = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
     // Create a navigation bar with a link to a web page.
-    navigationContainer->setTitle("iFlyWebUi4.5",
+    navigationContainer->setTitle("iFlyWebUi4.0",
         "http://jounip.github.io/iFlyWebUi/");
     navigationContainer->setResponsive(true);
 
@@ -142,11 +350,15 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     leftMenu_->addItem("Info", std::move(infoContainer));
     leftMenu_->addItem("GSX", std::move(GSXContainer));
 
+    // status row starts here
+
+    statusContainer->addWidget(std::move(txtGSXText));
+
     // Set Main layout to VBox that has 3 different areas (navi, content, status)
     auto vbox = setLayout(Wt::cpp14::make_unique<Wt::WVBoxLayout>());
     vbox->addWidget(std::move(navigationContainer));
     vbox->addWidget(std::move(contentsContainer), 1);
-    vbox->addWidget(std::move(statustext), 0);
+    vbox->addWidget(std::move(statusContainer), 0);
 
     // Connect to server
     connect();
