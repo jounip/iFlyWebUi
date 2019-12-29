@@ -1,43 +1,50 @@
-/*
- * Copyright (C) 2008 Emweb bvba, Heverlee, Belgium.
- *
- * See the LICENSE file for terms of use.
- */
-
 #include "pch.h"
+
+#include "Resource.h"
+#include "SimulatorDataStruct.h"
 
 #include "WebUiServer.h"
 
-const Wt::WString WebUiEvent::formattedHTML(const Wt::WString& user,
-				       Wt::TextFormat format) const
-{
-  switch (type_) {
-  case Message:{
-    Wt::WString result;
+#include "gsxStruct.h"
 
-    result = Wt::WString("<span class='")
-      + ((user == user_) ?
-	 "chat-self" :
-	 "chat-user")
-      + "'>" + Wt::WWebWidget::escapeText(user_) + ":</spasssn>";
+//#include "iFlyConnect.h"
+//#include "MenuReader.h"
+//#include "TextReader.h"
 
-    Wt::WString msg
-      = (format == Wt::TextFormat::XHTML ? message_ : Wt::WWebWidget::escapeText(message_));
+#include "gsxStruct.h"
 
-    if (message_.toUTF8().find(user.toUTF8()) != std::string::npos)
-      return result + "<span class='chat-highlight'>" + msg + "</span>";
-    else
-      return result + msg;
-  }
-  default:
-    return "";
-  }
-}
+
+#define KS_METAR_SERVER "tgftp.nws.noaa.gov"
+#define KS_METAR_PATH "/data/observations/metar/stations/"
+#define KS_TAF_PATH "/data/forecasts/taf/stations/"
 
 
 WebUiServer::WebUiServer(Wt::WServer& server)
-  : server_(server)
-{ }
+  : server_(server),
+    stop_(false)
+{
+    tempDepMetarString = "";
+    tempDepTafString = "";
+    tempArrMetarString = "";
+    tempArrTafString = "";
+    tempInfoString = "( -> )";
+    acDepIcao = "";
+    acArrIcao = "";
+    stateDoor1 = 0;
+    stateDoor2 = 0;
+    stateDoor3 = 0;
+    stateGroundPower = 0;
+    stateGroundAir = 0;
+
+    //thread_ = boost::thread(boost::bind(&SimpleWebServer::run, this));
+
+}
+
+WebUiServer::~WebUiServer()
+{
+    stop_ = true;
+    //thread_.join();
+}
 
 bool WebUiServer::connect(Client *client,
 			       const WebUiEventCallback& handleEvent)
@@ -64,11 +71,6 @@ bool WebUiServer::disconnect(Client *client)
   return clients_.erase(client) == 1;
 }
 
-void WebUiServer::sendMessage(const Wt::WString& user, const Wt::WString& message)
-{
-  postWebUiEvent(WebUiEvent(user, message));
-}
-
 void WebUiServer::postWebUiEvent(const WebUiEvent& event)
 {
   std::unique_lock<std::recursive_mutex> lock(mutex_);
@@ -77,30 +79,27 @@ void WebUiServer::postWebUiEvent(const WebUiEvent& event)
 
   for (ClientMap::const_iterator i = clients_.begin(); i != clients_.end();
        ++i) {
-    /*
-     * If the user corresponds to the current application, we directly
-     * call the call back method. This avoids an unnecessary delay for
-     * the update to the user causing the event.
-     *
-     * For other uses, we post it to their session. By posting the
-     * event, we avoid dead-lock scenarios, race conditions, and
-     * delivering the event to a session that is just about to be
-     * terminated.
-     */
-    if (app && app->sessionId() == i->second.sessionId)
-      i->second.eventCallback(event);
-    else
+
       server_.post(i->second.sessionId,
-                   std::bind(i->second.eventCallback, event));
+          std::bind(i->second.eventCallback, event));
   }
 }
 
-WebUiServer::UserSet WebUiServer::users()
+void WebUiServer::sendButtonPress(int pressButtonValue)
 {
-  std::unique_lock<std::recursive_mutex> lock(mutex_);
+    if (stop_)
+    {
+        return;
+    }
 
-  UserSet result = users_;
+    std::unique_lock<std::recursive_mutex> lock(mutex_);
 
-  return result;
 }
+
+int WebUiServer::GetWeather(int _wxrType, std::string& _icao, std::string& _resultWxr)
+{
+    return 0;
+}
+
+
 

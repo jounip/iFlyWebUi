@@ -5,8 +5,9 @@
  */
 
 #include "pch.h"
-#include "WebUiWidget.h"
+#include "Resource.h"
 
+#include "WebUiWidget.h"
 #include "WebUiServer.h"
 
 
@@ -68,6 +69,18 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto btnVirtualKey0 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 0");
     auto btnVirtualKeyF12 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F12");
 
+    btnVirtualKey1_ = btnVirtualKey1.get();
+    btnVirtualKey2_ = btnVirtualKey2.get();
+    btnVirtualKey3_ = btnVirtualKey3.get();
+    btnVirtualKey4_ = btnVirtualKey4.get();
+    btnVirtualKey5_ = btnVirtualKey5.get();
+    btnVirtualKey6_ = btnVirtualKey6.get();
+    btnVirtualKey7_ = btnVirtualKey7.get();
+    btnVirtualKey8_ = btnVirtualKey8.get();
+    btnVirtualKey9_ = btnVirtualKey9.get();
+    btnVirtualKey0_ = btnVirtualKey0.get();
+    btnVirtualKeyF12_ = btnVirtualKeyF12.get();
+
     // Setup default Weather text
     auto txtWxrMetarDep = Wt::cpp14::make_unique<Wt::WText>("DEPARTURE AIRPORT IS NOT SET");
     auto txtWxrTafDep = Wt::cpp14::make_unique<Wt::WText>("");
@@ -104,6 +117,40 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto txtNextETA = Wt::cpp14::make_unique<Wt::WText>("21:02:22");
     auto txtNextFuel = Wt::cpp14::make_unique<Wt::WText>("3700");
     auto txtNextDTG = Wt::cpp14::make_unique<Wt::WText>("46");
+
+    txtWxrMetarDep_ = txtWxrMetarDep.get();
+    txtWxrTafDep_ = txtWxrTafDep.get();
+    txtWxrMetarArr_ = txtWxrMetarArr.get();
+    txtWxrTafArr_ = txtWxrTafArr.get();
+
+    txtAlt_ = txtAlt.get();
+    txtSpeed_ = txtSpeed.get();
+    txtTemperature_ = txtTemperature.get();
+    txtOnGround_ = txtOnGround.get();
+
+    txtOut_ = txtOut.get();
+    txtOff_ = txtOff.get();
+    txtOn_ = txtOn.get();
+    txtIn_ = txtIn.get();
+
+    txtDestinationETA_ = txtDestinationETA.get();
+    txtDestinationDTG_ = txtDestinationDTG.get();
+    txtDestinationFuel_ = txtDestinationFuel.get();
+
+    txtLastName_ = txtLastName.get();
+    txtLastAlt_ = txtLastAlt.get();
+    txtLastATA_ = txtLastATA.get();
+    txtLastFuel_ = txtLastFuel.get();
+
+    txtActualName_ = txtActualName.get();
+    txtActualETA_ = txtActualETA.get();
+    txtActualFuel_ = txtActualFuel.get();
+    txtActualDTG_ = txtActualDTG.get();
+
+    txtNextName_ = txtNextName.get();
+    txtNextETA_ = txtNextETA.get();
+    txtNextFuel_ = txtNextFuel.get();
+    txtNextDTG_ = txtNextDTG.get();
 
 
     // Setup default GSX text
@@ -360,8 +407,160 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     vbox->addWidget(std::move(contentsContainer), 1);
     vbox->addWidget(std::move(statusContainer), 0);
 
+    // Setup a 60 seconds timer
+
+    auto timer = addChild(std::make_unique<Wt::WTimer>());
+    timer->setInterval(std::chrono::seconds(60));
+    timer->timeout().connect(this, &WebUiWidget::timerTimeout);
+    timer->start();
+
+    // Bind the C++ and JavaScript event handlers.
+    btnGroundPower_->clicked().connect(this, &WebUiWidget::pressedGroundPower);
+    btnGroundAir_->clicked().connect(this, &WebUiWidget::pressedGroundAir);
+
+    btnDoor1_->clicked().connect(this, &WebUiWidget::pressedButtonDoor1);
+    btnDoor2_->clicked().connect(this, &WebUiWidget::pressedButtonDoor2);
+    btnDoor3_->clicked().connect(this, &WebUiWidget::pressedButtonDoor3);
+
+    btnPushBack1_->clicked().connect(this, &WebUiWidget::pressedPushBack1);
+    btnPushBack2_->clicked().connect(this, &WebUiWidget::pressedPushBack2);
+    btnPushBack3_->clicked().connect(this, &WebUiWidget::pressedPushBack3);
+    btnPushBack4_->clicked().connect(this, &WebUiWidget::pressedPushBack4);
+
+    btnVirtualKey1_->clicked().connect(this, &WebUiWidget::pressedVirtualKey1);
+    btnVirtualKey2_->clicked().connect(this, &WebUiWidget::pressedVirtualKey2);
+    btnVirtualKey3_->clicked().connect(this, &WebUiWidget::pressedVirtualKey3);
+    btnVirtualKey4_->clicked().connect(this, &WebUiWidget::pressedVirtualKey4);
+    btnVirtualKey5_->clicked().connect(this, &WebUiWidget::pressedVirtualKey5);
+    btnVirtualKey6_->clicked().connect(this, &WebUiWidget::pressedVirtualKey6);
+    btnVirtualKey7_->clicked().connect(this, &WebUiWidget::pressedVirtualKey7);
+    btnVirtualKey8_->clicked().connect(this, &WebUiWidget::pressedVirtualKey8);
+    btnVirtualKey9_->clicked().connect(this, &WebUiWidget::pressedVirtualKey9);
+    btnVirtualKey0_->clicked().connect(this, &WebUiWidget::pressedVirtualKey0);
+    btnVirtualKeyF12_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF12);
+
+
     // Connect to server
     connect();
+}
+
+void WebUiWidget::timerTimeout()
+{
+    server_.sendButtonPress(ID_WEBUI_TIMER_TIMEOUT);
+}
+void WebUiWidget::pressedGroundPower()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_GROUND_POWER);
+}
+
+void WebUiWidget::pressedGroundAir()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_GROUND_AIR);
+}
+
+void WebUiWidget::pressedButtonDoor1()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_DOOR1);
+}
+
+void WebUiWidget::pressedButtonDoor2()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_DOOR2);
+}
+
+void WebUiWidget::pressedButtonDoor3()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_DOOR3);
+}
+
+void WebUiWidget::pressedPushBack1()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_PUSHBACK1);
+}
+
+void WebUiWidget::pressedPushBack2()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_PUSHBACK2);
+}
+
+void WebUiWidget::pressedPushBack3()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_PUSHBACK3);
+}
+
+void WebUiWidget::pressedPushBack4()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_PUSHBACK4);
+}
+
+void WebUiWidget::pressedVirtualKey0()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_0);
+}
+
+void WebUiWidget::pressedVirtualKey1()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_1);
+}
+
+void WebUiWidget::pressedVirtualKey2()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_2);
+}
+
+void WebUiWidget::pressedVirtualKey3()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_3);
+}
+
+void WebUiWidget::pressedVirtualKey4()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_4);
+}
+
+void WebUiWidget::pressedVirtualKey5()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_5);
+}
+
+void WebUiWidget::pressedVirtualKey6()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_6);
+}
+
+void WebUiWidget::pressedVirtualKey7()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_7);
+}
+
+void WebUiWidget::pressedVirtualKey8()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_8);
+}
+
+void WebUiWidget::pressedVirtualKey9()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_9);
+}
+
+void WebUiWidget::pressedVirtualKeyF12()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F12);
+}
+
+void WebUiWidget::hideVirtualButtons()
+{
+    gsxBox_->setTitle("GSX Menu");
+    btnVirtualKey1_->hide();
+    btnVirtualKey2_->hide();
+    btnVirtualKey3_->hide();
+    btnVirtualKey4_->hide();
+    btnVirtualKey5_->hide();
+    btnVirtualKey6_->hide();
+    btnVirtualKey7_->hide();
+    btnVirtualKey8_->hide();
+    btnVirtualKey9_->hide();
+    btnVirtualKey0_->hide();
 }
 
 WebUiWidget::~WebUiWidget()

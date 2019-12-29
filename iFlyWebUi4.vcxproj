@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gsxStruct.h" />
+    <ClInclude Include="SimulatorDataStruct.h" />
     <ClInclude Include="WebUiApplication.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="iFlyWebUi4.h" />
