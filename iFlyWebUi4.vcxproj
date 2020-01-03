@@ -112,6 +112,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>G:\Wt\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>wtd.lib;wthttpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>SimConnect/SimConnectDebug.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,7 +152,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Fsuipc\IPCuser64.h" />
     <ClInclude Include="gsxStruct.h" />
+    <ClInclude Include="iFlyConnect.h" />
     <ClInclude Include="SimulatorDataStruct.h" />
     <ClInclude Include="WebUiApplication.h" />
     <ClInclude Include="framework.h" />
@@ -163,6 +166,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Fsuipc\IPCuser64.cpp" />
+    <ClCompile Include="iFlyConnect.cpp" />
     <ClCompile Include="WebUiApplication.cpp" />
     <ClCompile Include="iFlyWebUi4.cpp" />
     <ClCompile Include="pch.cpp">

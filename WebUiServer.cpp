@@ -7,9 +7,9 @@
 
 #include "gsxStruct.h"
 
-//#include "iFlyConnect.h"
-//#include "MenuReader.h"
-//#include "TextReader.h"
+#include "iFlyConnect.h"
+#include "MenuReader.h"
+#include "TextReader.h"
 
 #include "gsxStruct.h"
 

@@ -45,6 +45,12 @@
     <ClInclude Include="SimulatorDataStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="iFlyConnect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fsuipc\IPCuser64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iFlyWebUi4.cpp">
@@ -60,6 +66,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WebUiWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="iFlyConnect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fsuipc\IPCuser64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
