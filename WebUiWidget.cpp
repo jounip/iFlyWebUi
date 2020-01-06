@@ -89,34 +89,34 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
 
     // Setup default info text
 
-    auto txtAlt = Wt::cpp14::make_unique<Wt::WText>("32013");
-    auto txtSpeed = Wt::cpp14::make_unique<Wt::WText>("450");
-    auto txtTemperature = Wt::cpp14::make_unique<Wt::WText>("-55");
-    auto txtOnGround = Wt::cpp14::make_unique<Wt::WText>("No");
+    auto txtAlt = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtSpeed = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtTemperature = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtOnGround = Wt::cpp14::make_unique<Wt::WText>("");
 
-    auto txtOut = Wt::cpp14::make_unique<Wt::WText>("18:02");
-    auto txtOff = Wt::cpp14::make_unique<Wt::WText>("18:07");
-    auto txtOn = Wt::cpp14::make_unique<Wt::WText>("21:33");
-    auto txtIn = Wt::cpp14::make_unique<Wt::WText>("21:29");
+    auto txtOut = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtOff = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtOn = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtIn = Wt::cpp14::make_unique<Wt::WText>("");
 
-    auto txtDestinationETA = Wt::cpp14::make_unique<Wt::WText>("23:59:03");
-    auto txtDestinationDTG = Wt::cpp14::make_unique<Wt::WText>("345");
-    auto txtDestinationFuel = Wt::cpp14::make_unique<Wt::WText>("2900");
+    auto txtDestinationETA = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtDestinationDTG = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtDestinationFuel = Wt::cpp14::make_unique<Wt::WText>("");
 
-    auto txtLastName = Wt::cpp14::make_unique<Wt::WText>("ROVIL");
-    auto txtLastAlt = Wt::cpp14::make_unique<Wt::WText>("FL280");
-    auto txtLastATA = Wt::cpp14::make_unique<Wt::WText>("20:38:51");
-    auto txtLastFuel = Wt::cpp14::make_unique<Wt::WText>("4300");
+    auto txtLastName = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtLastAlt = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtLastATA = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtLastFuel = Wt::cpp14::make_unique<Wt::WText>("");
 
-    auto txtActualName = Wt::cpp14::make_unique<Wt::WText>("TESTI");
-    auto txtActualETA = Wt::cpp14::make_unique<Wt::WText>("20:48:32");
-    auto txtActualFuel = Wt::cpp14::make_unique<Wt::WText>("4000");
-    auto txtActualDTG = Wt::cpp14::make_unique<Wt::WText>("23");
+    auto txtActualName = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtActualETA = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtActualFuel = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtActualDTG = Wt::cpp14::make_unique<Wt::WText>("");
 
-    auto txtNextName = Wt::cpp14::make_unique<Wt::WText>("FIXME");
-    auto txtNextETA = Wt::cpp14::make_unique<Wt::WText>("21:02:22");
-    auto txtNextFuel = Wt::cpp14::make_unique<Wt::WText>("3700");
-    auto txtNextDTG = Wt::cpp14::make_unique<Wt::WText>("46");
+    auto txtNextName = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtNextETA = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtNextFuel = Wt::cpp14::make_unique<Wt::WText>("");
+    auto txtNextDTG = Wt::cpp14::make_unique<Wt::WText>("");
 
     txtWxrMetarDep_ = txtWxrMetarDep.get();
     txtWxrTafDep_ = txtWxrTafDep.get();
@@ -152,9 +152,10 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     txtNextFuel_ = txtNextFuel.get();
     txtNextDTG_ = txtNextDTG.get();
 
-
     // Setup default GSX text
     auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("GSX not found.");
+    txtGSXText_ = txtGSXText.get();
+
 
     // Create Ground tab 
     auto groundBox = groundContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Ground Equipment"));
@@ -197,10 +198,14 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
 
     // Basic flightinfo
 
-    auto infoBox = hinforow1->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("NAX435 ( EFHK - EFRO )"));
-    infoBox->addStyleClass("fieldset-header");
+    auto infoBox = Wt::cpp14::make_unique<Wt::WGroupBox>(" (  -  )");
+    infoBox_ = infoBox.get();
 
-    auto flightinfocontainer = infoBox->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
+    hinforow1->addWidget(std::move(infoBox));
+
+    infoBox_->addStyleClass("fieldset-header");
+
+    auto flightinfocontainer = infoBox_->addWidget(Wt::cpp14::make_unique<Wt::WContainerWidget>());
 
     auto flightinfocontainerLayout = flightinfocontainer->setLayout(Wt::cpp14::make_unique<Wt::WHBoxLayout>());
 
@@ -585,17 +590,239 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
 {
   Wt::WApplication *app = Wt::WApplication::instance();
 
-  /*
-   * This is where the "server-push" happens. The chat server posts to this
-   * event from other sessions, see WebUiServer::postWebUiEvent()
-   */
-
-  /*
-   * This is the server call: we (schedule to) propagate the updated UI to
-   * the client.
-   *
-   * This schedules an update and returns immediately
-   */
   app->triggerUpdate();
+
+  if (event.type() == WebUiEvent::LatLon)
+  {
+      double tempLat;
+      double tempLon;
+
+      tempLat = event.iflydoublevalue();
+      tempLon = event.iflydoublevalue2();
+
+      //map->clearOverlays();
+      //map->setCenter(Wt::WGoogleMap::Coordinate(tempLat, tempLon));
+      //map->addMarker(Wt::WGoogleMap::Coordinate(tempLat, tempLon));
+
+  }
+
+  if (event.type() == WebUiEvent::LastWPT)
+  {
+      txtLastName_->setText(event.wttext());
+      txtLastAlt_->setText(boost::lexical_cast<std::string>(event.iflyvalue()));
+      txtLastATA_->setText(event.wttext2());
+      txtLastFuel_->setText(boost::lexical_cast<std::string>(event.iflyvalue3()));
+  }
+
+  if (event.type() == WebUiEvent::ActualWPT)
+  {
+      txtActualName_->setText(event.wttext());
+      txtActualETA_->setText(event.wttext2());
+      txtActualFuel_->setText(boost::lexical_cast<std::string>(event.iflyvalue2()));
+      std::stringstream ss;
+      ss << std::fixed << std::setprecision(2) << event.iflydoublevalue();
+      txtActualDTG_->setText(ss.str());
+  }
+
+  if (event.type() == WebUiEvent::NextWPT)
+  {
+      txtNextName_->setText(event.wttext());
+      txtNextETA_->setText(event.wttext2());
+      txtNextFuel_->setText(boost::lexical_cast<std::string>(event.iflyvalue2()));
+
+      std::stringstream ss;
+      ss << std::fixed << std::setprecision(2) << event.iflydoublevalue();
+      txtNextDTG_->setText(ss.str());
+  }
+
+  if (event.type() == WebUiEvent::Destination)
+  {
+      txtDestinationETA_->setText(event.wttext());
+      txtDestinationFuel_->setText(boost::lexical_cast<std::string>(event.iflyvalue()));
+
+      std::stringstream ss;
+      ss << std::fixed << std::setprecision(2) << event.iflydoublevalue();
+      txtDestinationDTG_->setText(ss.str());
+  }
+
+  if (event.type() == WebUiEvent::Alt)
+  {
+      int tempInt;
+
+      tempInt = event.iflyvalue();
+      std::string tempString = boost::lexical_cast<std::string>(tempInt);
+      txtAlt_->setText(tempString);
+  }
+
+  if (event.type() == WebUiEvent::Speed)
+  {
+      int tempInt;
+
+      tempInt = event.iflyvalue();
+      std::string tempString = boost::lexical_cast<std::string>(tempInt);
+      txtSpeed_->setText(tempString);
+  }
+
+  if (event.type() == WebUiEvent::Temperature)
+  {
+      int tempInt;
+
+      tempInt = event.iflyvalue();
+      std::string tempString = boost::lexical_cast<std::string>(tempInt);
+      txtTemperature_->setText(tempString);
+  }
+
+  if (event.type() == WebUiEvent::OnGround)
+  {
+      if (event.iflyvalue() == 1)
+      {
+          txtOnGround_->setText("Yes");
+      }
+      else
+      {
+          txtOnGround_->setText("No");
+      }
+  }
+
+  if (event.type() == WebUiEvent::GroundPower)
+  {
+      if (event.iflyvalue() == 0)
+      {
+          btnGroundPower_->setStyleClass("btn-danger");
+          btnGroundPower_->setText("Ground Power NA\nSet Parking Brake");
+      }
+      if (event.iflyvalue() == 1)
+      {
+          btnGroundPower_->setStyleClass("btn-success");
+          btnGroundPower_->setText("Ground Power\nAvailable");
+      }
+      if (event.iflyvalue() == 2)
+      {
+          btnGroundPower_->setStyleClass("btn-primary");
+          btnGroundPower_->setText("Ground Power\nConnected");
+      }
+
+  }
+
+  if (event.type() == WebUiEvent::GroundAir)
+  {
+      if (event.iflyvalue() == 0)
+      {
+          btnGroundAir_->setStyleClass("btn-danger");
+          btnGroundAir_->setText("Ground Air NA\nSet Parking Brake");
+      }
+      if (event.iflyvalue() == 1)
+      {
+          btnGroundAir_->setStyleClass("btn-success");
+          btnGroundAir_->setText("Ground Air\nAvailable");
+      }
+      if (event.iflyvalue() == 2)
+      {
+          btnGroundAir_->setStyleClass("btn-primary");
+          btnGroundAir_->setText("Ground Air\nConnected");
+      }
+
+  }
+
+
+  if (event.type() == WebUiEvent::Oooi)
+  {
+      txtOut_->setText(event.wttext());
+      txtOff_->setText(event.wttext2());
+      txtOn_->setText(event.wttext3());
+      txtIn_->setText(event.wttext4());
+  }
+
+  if (event.type() == WebUiEvent::Door)
+  {
+      if (event.iflydata() == 1)
+      {
+          if (event.iflyvalue() == 0)
+          {
+              btnDoor1_->setStyleClass("btn-success");
+              btnDoor1_->setText("Main door is CLOSED\nPress to open");
+          }
+          else
+          {
+              btnDoor1_->setStyleClass("btn-danger");
+              btnDoor1_->setText("Main door is OPEN\nPress to close");
+          }
+      }
+      if (event.iflydata() == 2)
+      {
+          if (event.iflyvalue() == 0)
+          {
+              btnDoor2_->setStyleClass("btn-success");
+              btnDoor2_->setText("Cargo door is CLOSED\nPress to open");
+          }
+          else
+          {
+              btnDoor2_->setStyleClass("btn-danger");
+              btnDoor2_->setText("Cargo door is OPEN\nPress to close");
+          }
+      }
+      if (event.iflydata() == 3)
+      {
+          if (event.iflyvalue() == 0)
+          {
+              btnDoor3_->setStyleClass("btn-success");
+              btnDoor3_->setText("Service door is CLOSED\nPress to open");
+          }
+          else
+          {
+              btnDoor3_->setStyleClass("btn-danger");
+              btnDoor3_->setText("Service door is OPEN\nPress to close");
+          }
+      }
+  }
+  if (event.type() == WebUiEvent::WxrMetarDep)
+  {
+      txtWxrMetarDep_->setText(event.wttext());
+  }
+  if (event.type() == WebUiEvent::WxrTafDep)
+  {
+      txtWxrTafDep_->setText(event.wttext());
+  }
+  if (event.type() == WebUiEvent::WxrMetarArr)
+  {
+      txtWxrMetarArr_->setText(event.wttext());
+  }
+  if (event.type() == WebUiEvent::WxrTafArr)
+  {
+      txtWxrTafArr_->setText(event.wttext());
+  }
+
+  if (event.type() == WebUiEvent::FlightInfo)
+  {
+      infoBox_->setTitle(event.wttext());
+  }
+
+  //if (event.type() == WebUiEvent::GsxMenuText)
+  //{
+//      Wt::WString _temptitle;
+//
+//      if (event.iflyvalue() == 0) {
+//          _temptitle = "GSX Menu / ";
+//          _temptitle = _temptitle + event.wttext();
+//          gsxBox_->setTitle(_temptitle);
+//      }
+
+//      if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }
+//      if (event.iflyvalue() == 2) { btnVirtualKey2_->setText(event.wttext()); btnVirtualKey2_->show(); }
+//      if (event.iflyvalue() == 3) { btnVirtualKey3_->setText(event.wttext()); btnVirtualKey3_->show(); }
+//      if (event.iflyvalue() == 4) { btnVirtualKey4_->setText(event.wttext()); btnVirtualKey4_->show(); }
+//      if (event.iflyvalue() == 5) { btnVirtualKey5_->setText(event.wttext()); btnVirtualKey5_->show(); }
+//      if (event.iflyvalue() == 6) { btnVirtualKey6_->setText(event.wttext()); btnVirtualKey6_->show(); }
+//      if (event.iflyvalue() == 7) { btnVirtualKey7_->setText(event.wttext()); btnVirtualKey7_->show(); }
+//      if (event.iflyvalue() == 8) { btnVirtualKey8_->setText(event.wttext()); btnVirtualKey8_->show(); }
+//      if (event.iflyvalue() == 9) { btnVirtualKey9_->setText(event.wttext()); btnVirtualKey9_->show(); }
+//      if (event.iflyvalue() == 10) { btnVirtualKey0_->setText(event.wttext()); btnVirtualKey0_->show(); }
+//  }
+
+//  if (event.type() == WebUiEvent::GsxTextText)
+//  {
+//      txtGSXText_->setText(event.wttext());
+//  }
+
 
 }

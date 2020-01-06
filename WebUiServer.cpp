@@ -60,6 +60,8 @@ bool WebUiServer::connectClient(Client *client,
 
     clients_[client] = clientInfo;
 
+	getInitialState();
+
     return true;
   } else
     return false;
@@ -182,7 +184,7 @@ void WebUiServer::SendGsxTextTextToWidget()
 
 	if (currentGsxTextText != "")
 	{
-		postWebUiEvent(WebUiEvent(WebUiEvent::GsxTextText, currentGsxTextText));
+		//postWebUiEvent(WebUiEvent(WebUiEvent::GsxTextText, currentGsxTextText));
 		_timer = 0;
 		_new = TRUE;
 	}
@@ -191,7 +193,7 @@ void WebUiServer::SendGsxTextTextToWidget()
 		_timer++;
 		if (_timer > 4 && _new == TRUE)
 		{
-			postWebUiEvent(WebUiEvent(WebUiEvent::GsxTextText, ""));
+			//postWebUiEvent(WebUiEvent(WebUiEvent::GsxTextText, ""));
 			_new = FALSE;
 		}
 	}
@@ -205,17 +207,17 @@ void WebUiServer::SendGSXMenuTextToWidget()
 
 	if (_newdata)
 	{
-		currentGsxMenuSubject = _gsxmenu.txtMenuSubject; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuSubject, 0, 0));
-		currentGsxMenuText1 = _gsxmenu.txtMenuItem1; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText1, 1, 0));
-		currentGsxMenuText2 = _gsxmenu.txtMenuItem2; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText2, 2, 0));
-		currentGsxMenuText3 = _gsxmenu.txtMenuItem3; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText3, 3, 0));
-		currentGsxMenuText4 = _gsxmenu.txtMenuItem4; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText4, 4, 0));
-		currentGsxMenuText5 = _gsxmenu.txtMenuItem5; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText5, 5, 0));
-		currentGsxMenuText6 = _gsxmenu.txtMenuItem6; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText6, 6, 0));
-		currentGsxMenuText7 = _gsxmenu.txtMenuItem7; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText7, 7, 0));
-		currentGsxMenuText8 = _gsxmenu.txtMenuItem8; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText8, 8, 0));
-		currentGsxMenuText9 = _gsxmenu.txtMenuItem9; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText9, 9, 0));
-		currentGsxMenuText0 = _gsxmenu.txtMenuItem10; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText0, 10, 0));
+		//currentGsxMenuSubject = _gsxmenu.txtMenuSubject; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuSubject, 0, 0));
+		//currentGsxMenuText1 = _gsxmenu.txtMenuItem1; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText1, 1, 0));
+		//currentGsxMenuText2 = _gsxmenu.txtMenuItem2; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText2, 2, 0));
+		//currentGsxMenuText3 = _gsxmenu.txtMenuItem3; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText3, 3, 0));
+		//currentGsxMenuText4 = _gsxmenu.txtMenuItem4; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText4, 4, 0));
+		//currentGsxMenuText5 = _gsxmenu.txtMenuItem5; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText5, 5, 0));
+		//currentGsxMenuText6 = _gsxmenu.txtMenuItem6; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText6, 6, 0));
+		//currentGsxMenuText7 = _gsxmenu.txtMenuItem7; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText7, 7, 0));
+		//currentGsxMenuText8 = _gsxmenu.txtMenuItem8; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText8, 8, 0));
+		//currentGsxMenuText9 = _gsxmenu.txtMenuItem9; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText9, 9, 0));
+		//currentGsxMenuText0 = _gsxmenu.txtMenuItem10; postWebUiEvent(WebUiEvent(WebUiEvent::GsxMenuText, currentGsxMenuText0, 10, 0));
 	}
 
 }
