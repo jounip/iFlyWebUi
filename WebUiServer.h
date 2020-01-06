@@ -90,8 +90,8 @@ public:
   WebUiServer(const WebUiServer &) = delete;
   WebUiServer &operator=(const WebUiServer &) = delete;
   ~WebUiServer();
-  bool connect(Client *client, const WebUiEventCallback& handleEvent);
-  bool disconnect(Client *client);
+  bool connectClient(Client *client, const WebUiEventCallback& handleEvent);
+  bool disconnectClient(Client *client);
   void sendButtonPress(int pressButtonValue);
 
 
@@ -107,9 +107,10 @@ private:
   std::recursive_mutex    mutex_;
   ClientMap               clients_;
  
+  boost::thread thread_;
   bool  stop_;
 
-  //WebUiSimulatorData webuisimulatordata_;
+  WebUiSimulatorData webuisimulatordata_;
 
   int simulatorStatus;
 

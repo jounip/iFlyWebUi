@@ -5,7 +5,7 @@
 
 #include "iFlyWebUi4.h"
 
-
+#include "inih/INIReader.h"
 
 #include "WebUiServer.h"
 #include "WebUiApplication.h"
@@ -28,6 +28,9 @@ BOOL ServerRunning = FALSE;
 // edit box size
 int nLength;
 
+std::string gsxMenuPath;
+std::string gsxTextPath;
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -49,6 +52,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
+
+    INIReader reader("iFlyWebUi.ini");
+
+    if (reader.ParseError() < 0) {
+        MessageBox(0, "loading iFlyWebUi.ini failed!", "Error!", MB_ICONSTOP | MB_OK);
+        return FALSE;
+    }
+
+    gsxMenuPath = reader.Get("WideFS", "Menu", "");
+    gsxTextPath = reader.Get("WideFS", "Text", "");
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -239,6 +252,43 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
+        break;
+    case ID_INTERFACE_NOT_OK:
+        wmId = LOWORD(wParam);
+        wmEvent = HIWORD(wParam);
+        switch (wmId)
+        {
+        case ID_IFLY_NOT_OK:
+            Logger((LPARAM)"Status : IFLY NOT OK");
+            break;
+        case ID_IFLY_SDK2_NOT_OK:
+            Logger((LPARAM)"Status : IFLY CDU SDK NOT OK");
+            break;
+        case ID_IFLY_SDK_NOT_OK:
+            Logger((LPARAM)"Status : IFLY SDK NOT OK");
+            break;
+        case ID_FSUIPC_NOT_OK:
+            Logger((LPARAM)"Status : FSUIPC NOT OK");
+            break;
+        case ID_WITTY_NOT_OK:
+            Logger((LPARAM)"Status : WT NOT STARTED");
+            break;
+        case ID_SIMCONNECT_NOT_OK:
+            Logger((LPARAM)"Status : SIMCONNECT NOT OK");
+            break;
+        default:
+            Logger((LPARAM)"Status : INTERFACE NOT OK");
+            break;
+        }
+        break;
+    case ID_THREAD_EXIT:
+        Logger((LPARAM)"Status : iFly737 THREAD EXIT");
+        break;
+    case ID_WITTY_OK:
+        Logger((LPARAM)"Status : WT STARTED");
+        break;
+    case ID_INTERFACE_OK:
+        Logger((LPARAM)"Status : ALL INTERFACES OK");
         break;
     case WM_PAINT:
         {

@@ -51,6 +51,18 @@
     <ClInclude Include="Fsuipc\IPCuser64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inih\ini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inih\INIReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iFlyWebUi4.cpp">
@@ -72,6 +84,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fsuipc\IPCuser64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inih\ini.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inih\INIReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

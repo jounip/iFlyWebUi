@@ -104,13 +104,13 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>G:\Wt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\boost_1_72_0;G:\Wt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>G:\Wt\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>G:\boost_1_72_0\stage\lib;G:\Wt\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>wtd.lib;wthttpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>SimConnect/SimConnectDebug.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -155,7 +155,11 @@
     <ClInclude Include="Fsuipc\IPCuser64.h" />
     <ClInclude Include="gsxStruct.h" />
     <ClInclude Include="iFlyConnect.h" />
+    <ClInclude Include="inih\ini.h" />
+    <ClInclude Include="inih\INIReader.h" />
+    <ClInclude Include="MenuReader.h" />
     <ClInclude Include="SimulatorDataStruct.h" />
+    <ClInclude Include="TextReader.h" />
     <ClInclude Include="WebUiApplication.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="iFlyWebUi4.h" />
@@ -168,6 +172,10 @@
   <ItemGroup>
     <ClCompile Include="Fsuipc\IPCuser64.cpp" />
     <ClCompile Include="iFlyConnect.cpp" />
+    <ClCompile Include="inih\ini.cpp" />
+    <ClCompile Include="inih\INIReader.cpp" />
+    <ClCompile Include="MenuReader.cpp" />
+    <ClCompile Include="TextReader.cpp" />
     <ClCompile Include="WebUiApplication.cpp" />
     <ClCompile Include="iFlyWebUi4.cpp" />
     <ClCompile Include="pch.cpp">

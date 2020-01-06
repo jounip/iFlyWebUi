@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "pch.h"
+
 #include "TextReader.h"
 
 extern std::string gsxTextPath;

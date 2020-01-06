@@ -1,11 +1,7 @@
-#include "stdafx.h"
+#include "pch.h"
+
 #include "MenuReader.h"
 #include "gsxStruct.h"
-
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
-
-#include <sstream>
 
 extern std::string gsxMenuPath;
 

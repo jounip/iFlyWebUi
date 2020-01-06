@@ -40,4 +40,23 @@
 #include <Wt/WLabel.h>
 #include <Wt/WTable.h>
 
+#include "gsxStruct.h"
+#include "SimulatorDataStruct.h"
+
+#include <boost/thread.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/lexical_cast.hpp>
+
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
+
+#include "boost/date_time/posix_time/posix_time.hpp"
+
+#include <chrono>
+#include <sstream>
+
+#include <winsock2.h>
+#include <stdio.h>
+#include <string.h>
+
 #endif //PCH_H

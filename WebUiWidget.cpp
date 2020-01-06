@@ -570,14 +570,14 @@ WebUiWidget::~WebUiWidget()
 
 void WebUiWidget::connect()
 {
-  if (server_.connect
+  if (server_.connectClient
       (this, std::bind(&WebUiWidget::processWebUiEvent, this, std::placeholders::_1)))
     Wt::WApplication::instance()->enableUpdates(true);
 }
 
 void WebUiWidget::disconnect()
 {
-  if (server_.disconnect(this))
+  if (server_.disconnectClient(this))
     Wt::WApplication::instance()->enableUpdates(false);
 }
 
