@@ -282,7 +282,10 @@ DWORD iFlyConnect::OpenInterface(void)
 
 void iFlyConnect::CloseInterface(void)
 {
-
+#ifdef _IFLYTEST
+	// do here stuff for testing mode
+	
+#else
 	if (hSimConnect)
 	{
 		hr_simconnect = SimConnect_Close(hSimConnect);
@@ -311,6 +314,7 @@ void iFlyConnect::CloseInterface(void)
 	hMapFileSDK2 = NULL;
 
 	FSUIPC_Close(); // Closing when it wasn't open is okay, so this is safe here
+#endif _IFLYTEST
 }
 
 void iFlyConnect::GetSimulatorData(WebUiSimulatorData *_simdata)
