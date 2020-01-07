@@ -37,6 +37,7 @@ iFlyConnect::iFlyConnect()
 
 iFlyConnect::~iFlyConnect()
 {
+	CloseInterface();
 }
 
 
