@@ -15,14 +15,10 @@
 #include <Wt/WEnvironment.h>
 #include <Wt/WServer.h>
 #include <Wt/WTimer.h>
-
 #include <Wt/WBootstrapTheme.h>
-
 #include <Wt/WSignal.h>
 #include <Wt/WString.h>
-
 #include <Wt/WJavaScript.h>
-
 #include <Wt/WHBoxLayout.h>
 #include <Wt/WVBoxLayout.h>
 #include <Wt/WFitLayout.h>
@@ -30,7 +26,6 @@
 #include <Wt/WText.h>
 #include <Wt/WTextArea.h>
 #include <Wt/WPushButton.h>
-
 #include <Wt/WNavigationBar.h>
 #include <Wt/WStackedWidget.h>
 #include <Wt/WMenu.h>
@@ -40,23 +35,24 @@
 #include <Wt/WLabel.h>
 #include <Wt/WTable.h>
 
-#include "gsxStruct.h"
-#include "SimulatorDataStruct.h"
 
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
-
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-
 #include "boost/date_time/posix_time/posix_time.hpp"
 
 #include <chrono>
 #include <sstream>
-
 #include <winsock2.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "gsxStruct.h"
+#include "SimulatorDataStruct.h"
+
+#include "inih/INIReader.h"
+
 
 #endif //PCH_H
