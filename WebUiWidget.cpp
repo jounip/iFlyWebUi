@@ -57,19 +57,18 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnPushBack4_->setStyleClass("btn-danger");
 
     // Setup needed buttons for GSX tab  
-    auto btnVirtualKey1 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 1");
-    auto btnVirtualKey2 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 2");
-    auto btnVirtualKey3 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 3");
-    auto btnVirtualKey4 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 4");
-    auto btnVirtualKey5 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 5");
-    auto btnVirtualKey6 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 6");
-    auto btnVirtualKey7 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 7");
-    auto btnVirtualKey8 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 8");
-    auto btnVirtualKey9 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 9");
-    auto btnVirtualKey0 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 0");
-    auto btnVirtualKeyF10 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F10");
-    auto btnVirtualKeyF11 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F11");
-    auto btnVirtualKeyF12 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F12");
+    auto btnVirtualKey1 = Wt::cpp14::make_unique<Wt::WPushButton>("1 - Reposition here at current gate");
+    auto btnVirtualKey2 = Wt::cpp14::make_unique<Wt::WPushButton>("2 - Runway 4L Start");
+    auto btnVirtualKey3 = Wt::cpp14::make_unique<Wt::WPushButton>("3 - Runway 4R Start");
+    auto btnVirtualKey4 = Wt::cpp14::make_unique<Wt::WPushButton>("4 - Runway 22L Start ");
+    auto btnVirtualKey5 = Wt::cpp14::make_unique<Wt::WPushButton>("5 - Runway 22R Start ");
+    auto btnVirtualKey6 = Wt::cpp14::make_unique<Wt::WPushButton>("6 - Runway 33 Start ");
+    auto btnVirtualKey7 = Wt::cpp14::make_unique<Wt::WPushButton>("7 - Dock	(14 suitable parkings) ");
+    auto btnVirtualKey8 = Wt::cpp14::make_unique<Wt::WPushButton>("8 - Gate	(42 suitable parkings) ");
+    auto btnVirtualKey9 = Wt::cpp14::make_unique<Wt::WPushButton>("9 - SE Parking	(21 suitable parkings) ");
+    auto btnVirtualKey0 = Wt::cpp14::make_unique<Wt::WPushButton>("0 - SW Parking	(13 suitable parkings) ");
+    auto btnVirtualKeyF10 = Wt::cpp14::make_unique<Wt::WPushButton>("Open/Close SODE Menu");
+    auto btnVirtualKeyF11 = Wt::cpp14::make_unique<Wt::WPushButton>("Open/Close GSX Menu");
 
     btnVirtualKey1_ = btnVirtualKey1.get();
     btnVirtualKey2_ = btnVirtualKey2.get();
@@ -83,7 +82,6 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnVirtualKey0_ = btnVirtualKey0.get();
     btnVirtualKeyF10_ = btnVirtualKeyF10.get();
     btnVirtualKeyF11_ = btnVirtualKeyF11.get();
-    btnVirtualKeyF12_ = btnVirtualKeyF12.get();
 
     // Setup default Weather text
     auto txtWxrMetarDep = Wt::cpp14::make_unique<Wt::WText>("DEPARTURE AIRPORT IS NOT SET");
@@ -370,21 +368,19 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     GSXBox->addStyleClass("fieldset-header");
 
     auto gsxTable = GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WTable>());
-    gsxTable->setWidth(Wt::WLength("100%"));
 
-    gsxTable->elementAt(0, 0)->addWidget(std::move(btnVirtualKey1));
-    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey2));
-    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey3));
-    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey4));
-    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKey5));
+    gsxTable->elementAt(0, 0)->addWidget(std::move(btnVirtualKeyF10));
+    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey1));
+    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey2));
+    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey3));
+    gsxTable->elementAt(4, 0)->addWidget(std::move(btnVirtualKey4));
+    gsxTable->elementAt(5, 0)->addWidget(std::move(btnVirtualKey5));
+    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKeyF11));
     gsxTable->elementAt(1, 1)->addWidget(std::move(btnVirtualKey6));
     gsxTable->elementAt(2, 1)->addWidget(std::move(btnVirtualKey7));
     gsxTable->elementAt(3, 1)->addWidget(std::move(btnVirtualKey8));
-    gsxTable->elementAt(0, 2)->addWidget(std::move(btnVirtualKey9));
-    gsxTable->elementAt(1, 2)->addWidget(std::move(btnVirtualKey0));
-    gsxTable->elementAt(0, 3)->addWidget(std::move(btnVirtualKeyF10));
-    gsxTable->elementAt(1, 3)->addWidget(std::move(btnVirtualKeyF11));
-    gsxTable->elementAt(2, 3)->addWidget(std::move(btnVirtualKeyF12));
+    gsxTable->elementAt(4, 1)->addWidget(std::move(btnVirtualKey9));
+    gsxTable->elementAt(5, 1)->addWidget(std::move(btnVirtualKey0));
 
 
     // Create 3 main containers from top to bottom.
@@ -448,7 +444,8 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnVirtualKey8_->clicked().connect(this, &WebUiWidget::pressedVirtualKey8);
     btnVirtualKey9_->clicked().connect(this, &WebUiWidget::pressedVirtualKey9);
     btnVirtualKey0_->clicked().connect(this, &WebUiWidget::pressedVirtualKey0);
-    btnVirtualKeyF12_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF12);
+    btnVirtualKeyF10_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF10);
+    btnVirtualKeyF11_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF11);
 
 
     // Connect to server
@@ -562,11 +559,6 @@ void WebUiWidget::pressedVirtualKeyF10()
 void WebUiWidget::pressedVirtualKeyF11()
 {
     server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F11);
-}
-
-void WebUiWidget::pressedVirtualKeyF12()
-{
-    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F12);
 }
 
 void WebUiWidget::hideVirtualButtons()
