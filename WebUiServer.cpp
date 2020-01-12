@@ -697,11 +697,74 @@ void WebUiServer::sendButtonPress(int pressButtonValue)
 
 int WebUiServer::GetWeather(int _wxrType, std::string& _icao, std::string& _resultWxr)
 {
+	std::string weatherUrl;
 
-//		From original HTTP client: this whole thing needs reprogramming...
-//		wsprintf(acTmp, "GET http://" KS_METAR_SERVER KS_METAR_PATH "%hs.TXT HTTP/1.0\n\n", cstr);
-//		wsprintf(acTmp, "GET http://" KS_METAR_SERVER KS_TAF_PATH "%hs.TXT HTTP/1.0\n\n", cstr);
-	_resultWxr = "Weather system is not coded yet.. sorry";
+	if (_icao.length() != 4)
+	{
+		_icao = "EFHK";
+	}
+
+	weatherUrl = "GET ";
+	switch (_wxrType)
+	{
+	case 1:
+	{
+		weatherUrl.append(KS_METAR_PATH);
+		break;
+	}
+	case 2:
+	{
+		weatherUrl.append(KS_TAF_PATH);
+		break;
+	}
+	break;
+	}	
+	weatherUrl.append(_icao);
+	weatherUrl.append(".TXT HTTP/1.1\r\nHost: tgftp.nws.noaa.gov\r\nAccept-Encoding: *\r\nConnection: close\r\n\r\n");
+
+	boost::system::error_code ec;
+	using namespace boost::asio;
+
+
+	// what we need
+	io_service svc;
+	boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23);
+	ctx.load_verify_file("cacert.pem", ec);
+
+	ssl::stream<ip::tcp::socket> ssock(svc, ctx);
+
+	ip::tcp::resolver resolver(svc);
+	auto it = resolver.resolve({ KS_METAR_SERVER, "443" });
+	boost::asio::connect(ssock.lowest_layer(), it);
+
+	ssock.handshake(ssl::stream_base::handshake_type::client);
+
+	// send request
+	std::string request(weatherUrl);
+	boost::asio::write(ssock, buffer(request));
+
+	// read response
+	std::string response;
+	char buf[1024];
+	do {
+		char buf[1024];
+		size_t bytes_transferred = ssock.read_some(buffer(buf), ec);
+		if (!ec) response.append(buf, buf + bytes_transferred);
+	} while (!ec);
+
+	//Remove HTTP headers
+	size_t pos;
+	std::string subResponse;
+
+	pos = response.find("\r\n\r\n");
+	subResponse = response.substr(pos+4);
+
+	//Remove Datetime
+	pos = subResponse.find("\n");
+	response = subResponse.substr(pos + 1);
+
+	_resultWxr = response;
+
 	return(0);
 }
 

@@ -41,12 +41,16 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
 
-#include <chrono>
-#include <sstream>
-#include <winsock2.h>
-#include <stdio.h>
+#include <boost/bind.hpp>
+#include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
+
+#include <cstdlib>
+#include <cstring>
+#include <functional>
+#include <iostream>
 #include <string.h>
 
 #include "gsxStruct.h"
