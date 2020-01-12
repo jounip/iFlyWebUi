@@ -697,116 +697,74 @@ void WebUiServer::sendButtonPress(int pressButtonValue)
 
 int WebUiServer::GetWeather(int _wxrType, std::string& _icao, std::string& _resultWxr)
 {
-	SOCKET udtSocket;
-	SOCKADDR_IN udtAddress;
-	WSADATA udtWsa;
-	LPHOSTENT udtHost;
-	_TCHAR acTmp[1024];
-	_TCHAR acData[1024];
-	_TCHAR acResult[1024];
-	_TCHAR* pcStart;
-	_TCHAR* pcEnd;
-
-	acTmp[0] = _T('\0');
-	acData[0] = _T('\0');
-
-	int _receivedBytes;
-
-	if (stop_)
-	{
-		return(-9);
-	}
-
-	if (WSAStartup(MAKEWORD(1, 0), &udtWsa) != 0)
-	{
-		return(-1);
-	}
-
-	udtHost = gethostbyname(KS_METAR_SERVER);
-	if (!udtHost)
-	{
-		return(-2);
-	}
-
-	udtSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (udtSocket == INVALID_SOCKET)
-	{
-		return(-3);
-	}
-
-	if (!udtHost->h_addr_list)
-	{
-		return(-4);
-	}
-
-	udtAddress.sin_addr = *((LPIN_ADDR)*udtHost->h_addr_list);
-	udtAddress.sin_family = AF_INET;
-	udtAddress.sin_port = htons(80);
-
-	if (connect(udtSocket, (LPSOCKADDR)&udtAddress, sizeof(udtAddress)) == SOCKET_ERROR)
-	{
-		return(-5);
-	}
+	std::string weatherUrl;
 
 	if (_icao.length() != 4)
 	{
 		_icao = "EFHK";
 	}
 
-	char* cstr = new char[_icao.length() + 1];
-	std::strcpy(cstr, _icao.c_str());
-
+	weatherUrl = "GET ";
 	switch (_wxrType)
 	{
 	case 1:
 	{
-		wsprintf(acTmp, "GET http://" KS_METAR_SERVER KS_METAR_PATH "%hs.TXT HTTP/1.0\n\n", cstr);
+		weatherUrl.append(KS_METAR_PATH);
 		break;
 	}
 	case 2:
 	{
-		wsprintf(acTmp, "GET http://" KS_METAR_SERVER KS_TAF_PATH "%hs.TXT HTTP/1.0\n\n", cstr);
+		weatherUrl.append(KS_TAF_PATH);
 		break;
 	}
 	break;
-	}
+	}	
+	weatherUrl.append(_icao);
+	weatherUrl.append(".TXT HTTP/1.1\r\nHost: tgftp.nws.noaa.gov\r\nAccept-Encoding: *\r\nConnection: close\r\n\r\n");
 
-	delete[] cstr;
+	boost::system::error_code ec;
+	using namespace boost::asio;
 
 
-	if (send(udtSocket, acTmp, lstrlen(acTmp), 0) == SOCKET_ERROR)
-	{
-		return(-6);
-	}
+	// what we need
+	io_service svc;
+	boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23);
+	ctx.load_verify_file("cacert.pem", ec);
 
-	_receivedBytes = recv(udtSocket, acData, sizeof(acData), 0);
+	ssl::stream<ip::tcp::socket> ssock(svc, ctx);
 
-	if (_receivedBytes == SOCKET_ERROR)
-	{
-		return(-7);
-	}
+	ip::tcp::resolver resolver(svc);
+	auto it = resolver.resolve({ KS_METAR_SERVER, "443" });
+	boost::asio::connect(ssock.lowest_layer(), it);
 
-	closesocket(udtSocket);
-	WSACleanup();
+	ssock.handshake(ssl::stream_base::handshake_type::client);
 
-	//Read only received bytes
-	lstrcpyn(acResult, acData, _receivedBytes);
+	// send request
+	std::string request(weatherUrl);
+	boost::asio::write(ssock, buffer(request));
+
+	// read response
+	std::string response;
+	char buf[1024];
+	do {
+		char buf[1024];
+		size_t bytes_transferred = ssock.read_some(buffer(buf), ec);
+		if (!ec) response.append(buf, buf + bytes_transferred);
+	} while (!ec);
 
 	//Remove HTTP headers
-	pcStart = strstr(acResult, "\r\n\r\n");
-	if (pcStart)
-	{
-		lstrcpyn(acResult, pcStart + 4, acResult - pcStart + 4);
-	}
+	size_t pos;
+	std::string subResponse;
+
+	pos = response.find("\r\n\r\n");
+	subResponse = response.substr(pos+4);
 
 	//Remove Datetime
-	pcStart = strstr(acResult, "\n");
-	if (pcStart)
-	{
-		lstrcpyn(acResult, pcStart + 1, acResult - pcStart + 1);
-	}
+	pos = subResponse.find("\n");
+	response = subResponse.substr(pos + 1);
 
-	_resultWxr = acResult;
+	_resultWxr = response;
+
 	return(0);
 }
 

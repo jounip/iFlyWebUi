@@ -48,6 +48,8 @@ private:
   Wt::WPushButton* btnVirtualKey8_;
   Wt::WPushButton* btnVirtualKey9_;
   Wt::WPushButton* btnVirtualKey0_;
+  Wt::WPushButton* btnVirtualKeyF10_;
+  Wt::WPushButton* btnVirtualKeyF11_;
   Wt::WPushButton* btnVirtualKeyF12_;
 
   Wt::WGroupBox* infoBox_;
@@ -119,6 +121,8 @@ private:
   void pressedVirtualKey8();
   void pressedVirtualKey9();
   void pressedVirtualKey0();
+  void pressedVirtualKeyF10();
+  void pressedVirtualKeyF11();
   void pressedVirtualKeyF12();
 
   void hideVirtualButtons();

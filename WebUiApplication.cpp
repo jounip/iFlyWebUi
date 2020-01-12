@@ -12,7 +12,7 @@ ChatApplication::ChatApplication(const Wt::WEnvironment& env,
     server_(server),
     env_(env)
 {
-    setTitle("Wt Chat");
+    setTitle("iFlyWebUi 4.0");
     useStyleSheet("iflyapp.css");
 
     auto theme = std::make_shared<Wt::WBootstrapTheme>();

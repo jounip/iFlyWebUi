@@ -351,5 +351,7 @@ MigrationBackup/
 /resources
 /SDK737
 /SDK747
-/SimConnect
-
+/ReleasePack
+/cacert.pem
+/libcrypto-3.dll
+/libssl-3.dll

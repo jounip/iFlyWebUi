@@ -67,6 +67,8 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto btnVirtualKey8 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 8");
     auto btnVirtualKey9 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 9");
     auto btnVirtualKey0 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 0");
+    auto btnVirtualKeyF10 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F10");
+    auto btnVirtualKeyF11 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F11");
     auto btnVirtualKeyF12 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F12");
 
     btnVirtualKey1_ = btnVirtualKey1.get();
@@ -79,6 +81,8 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnVirtualKey8_ = btnVirtualKey8.get();
     btnVirtualKey9_ = btnVirtualKey9.get();
     btnVirtualKey0_ = btnVirtualKey0.get();
+    btnVirtualKeyF10_ = btnVirtualKeyF10.get();
+    btnVirtualKeyF11_ = btnVirtualKeyF11.get();
     btnVirtualKeyF12_ = btnVirtualKeyF12.get();
 
     // Setup default Weather text
@@ -153,7 +157,7 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     txtNextDTG_ = txtNextDTG.get();
 
     // Setup default GSX text
-    auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("GSX not found.");
+    auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("");
     txtGSXText_ = txtGSXText.get();
 
 
@@ -362,23 +366,25 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
 
     // GSX Tab starts here
 
-    auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("GSX Menu"));
+    auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("GSX / Sode Menu"));
     GSXBox->addStyleClass("fieldset-header");
 
     auto gsxTable = GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WTable>());
     gsxTable->setWidth(Wt::WLength("100%"));
 
     gsxTable->elementAt(0, 0)->addWidget(std::move(btnVirtualKey1));
-    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKey2));
-    gsxTable->elementAt(0, 2)->addWidget(std::move(btnVirtualKey3));
-    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey4));
-    gsxTable->elementAt(1, 1)->addWidget(std::move(btnVirtualKey5));
-    gsxTable->elementAt(1, 2)->addWidget(std::move(btnVirtualKey6));
-    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey7));
-    gsxTable->elementAt(2, 1)->addWidget(std::move(btnVirtualKey8));
-    gsxTable->elementAt(2, 2)->addWidget(std::move(btnVirtualKey9));
-    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey0));
-    gsxTable->elementAt(3, 2)->addWidget(std::move(btnVirtualKeyF12));
+    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey2));
+    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey3));
+    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey4));
+    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKey5));
+    gsxTable->elementAt(1, 1)->addWidget(std::move(btnVirtualKey6));
+    gsxTable->elementAt(2, 1)->addWidget(std::move(btnVirtualKey7));
+    gsxTable->elementAt(3, 1)->addWidget(std::move(btnVirtualKey8));
+    gsxTable->elementAt(0, 2)->addWidget(std::move(btnVirtualKey9));
+    gsxTable->elementAt(1, 2)->addWidget(std::move(btnVirtualKey0));
+    gsxTable->elementAt(0, 3)->addWidget(std::move(btnVirtualKeyF10));
+    gsxTable->elementAt(1, 3)->addWidget(std::move(btnVirtualKeyF11));
+    gsxTable->elementAt(2, 3)->addWidget(std::move(btnVirtualKeyF12));
 
 
     // Create 3 main containers from top to bottom.
@@ -548,6 +554,16 @@ void WebUiWidget::pressedVirtualKey9()
     server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_9);
 }
 
+void WebUiWidget::pressedVirtualKeyF10()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F10);
+}
+
+void WebUiWidget::pressedVirtualKeyF11()
+{
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F11);
+}
+
 void WebUiWidget::pressedVirtualKeyF12()
 {
     server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F12);
@@ -555,7 +571,7 @@ void WebUiWidget::pressedVirtualKeyF12()
 
 void WebUiWidget::hideVirtualButtons()
 {
-    gsxBox_->setTitle("GSX Menu");
+    gsxBox_->setTitle("GSX / Sode Buttons");
     btnVirtualKey1_->hide();
     btnVirtualKey2_->hide();
     btnVirtualKey3_->hide();
@@ -802,7 +818,7 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
 //      Wt::WString _temptitle;
 //
 //      if (event.iflyvalue() == 0) {
-//          _temptitle = "GSX Menu / ";
+//          _temptitle = "GSX / Sode Menu / ";
 //          _temptitle = _temptitle + event.wttext();
 //          gsxBox_->setTitle(_temptitle);
 //      }
