@@ -22,7 +22,7 @@ title: iFlyWebUi 4.0
 email: jounip@users.noreply.github.com
 description: >- # this means to ignore newlines until "baseurl:"
   iFlyWebUi is user interface for iFly 737 addon for Prepar3D v4. It let's you start and stop different ground and air processes via browser without a need for a keyboard or mouse.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/iFlyWebUi" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  jounip
 
