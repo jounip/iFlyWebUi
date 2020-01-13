@@ -19,11 +19,10 @@
 # in the templates via {{ site.myvariable }}.
 
 title: iFlyWebUI
-email: your-email@example.com
+email: jounip@users.noreply.github.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  iFlyWebUI is user interface for iFly 737NG Prepar3D v4 addon.
+
 baseurl: "/iFlyWebUi" # the subpath of your site, e.g. /blog
 url: "https://jounip.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  jounip
