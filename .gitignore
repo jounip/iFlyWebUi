@@ -348,10 +348,21 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Resources copied from WT ToolKit
 /resources
+
+# Ifly Internal SDKs
 /SDK737
 /SDK747
+
+#Placeholder for releases
 /ReleasePack
+
+#SSL stuff copied from OpenSSL
 /cacert.pem
 /libcrypto-3.dll
 /libssl-3.dll
+
+#Ignore wiki
+/docs/_site
