@@ -21,7 +21,7 @@
 extern HWND hWnd;
 
 // define _iflytest when testing without simulator
-//#define _IFLYTEST
+#define _IFLYTEST
 
 
 iFlyConnect::iFlyConnect()
@@ -486,6 +486,8 @@ void iFlyConnect::TogglePushBack(int _turn)
 void iFlyConnect::SendVirtualKey(long _virtualkey)
 {
 
+	// fsuipc keypress command
+	long _command = 1070;
 
 	if (fsuipc_status == 0)
 	{

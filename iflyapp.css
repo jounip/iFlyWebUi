@@ -11,10 +11,12 @@ h2, h3, h4, h5 {
   color: #505050;
 }
 
-button {
+.btn {
+  white-space: normal !important;
+  word-wrap: break-word;
   margin: 10px 10px;
   width: 200px;
-  height: 60px;
+  height: 80px;
 }
 
 .statustext {

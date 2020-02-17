@@ -43,9 +43,6 @@ private:
 
 	double _alt = 0;
 
-	// fsuipc keypress command
-	long _command = 1070;
-
 	// SimConnect Global Variables
 	HANDLE hSimConnect = NULL;
 	HRESULT hr_simconnect;

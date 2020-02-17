@@ -813,8 +813,8 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
       infoBox_->setTitle(event.wttext());
   }
 
-  //if (event.type() == WebUiEvent::GsxMenuText)
-  //{
+  if (event.type() == WebUiEvent::GsxMenuText)
+  {
 //      Wt::WString _temptitle;
 //
 //      if (event.iflyvalue() == 0) {
@@ -823,22 +823,22 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
 //          gsxBox_->setTitle(_temptitle);
 //      }
 
-//      if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }
-//      if (event.iflyvalue() == 2) { btnVirtualKey2_->setText(event.wttext()); btnVirtualKey2_->show(); }
-//      if (event.iflyvalue() == 3) { btnVirtualKey3_->setText(event.wttext()); btnVirtualKey3_->show(); }
-//      if (event.iflyvalue() == 4) { btnVirtualKey4_->setText(event.wttext()); btnVirtualKey4_->show(); }
-//      if (event.iflyvalue() == 5) { btnVirtualKey5_->setText(event.wttext()); btnVirtualKey5_->show(); }
-//      if (event.iflyvalue() == 6) { btnVirtualKey6_->setText(event.wttext()); btnVirtualKey6_->show(); }
-//      if (event.iflyvalue() == 7) { btnVirtualKey7_->setText(event.wttext()); btnVirtualKey7_->show(); }
-//      if (event.iflyvalue() == 8) { btnVirtualKey8_->setText(event.wttext()); btnVirtualKey8_->show(); }
-//      if (event.iflyvalue() == 9) { btnVirtualKey9_->setText(event.wttext()); btnVirtualKey9_->show(); }
-//      if (event.iflyvalue() == 10) { btnVirtualKey0_->setText(event.wttext()); btnVirtualKey0_->show(); }
-//  }
+      if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }
+      if (event.iflyvalue() == 2) { btnVirtualKey2_->setText(event.wttext()); btnVirtualKey2_->show(); }
+      if (event.iflyvalue() == 3) { btnVirtualKey3_->setText(event.wttext()); btnVirtualKey3_->show(); }
+      if (event.iflyvalue() == 4) { btnVirtualKey4_->setText(event.wttext()); btnVirtualKey4_->show(); }
+      if (event.iflyvalue() == 5) { btnVirtualKey5_->setText(event.wttext()); btnVirtualKey5_->show(); }
+      if (event.iflyvalue() == 6) { btnVirtualKey6_->setText(event.wttext()); btnVirtualKey6_->show(); }
+      if (event.iflyvalue() == 7) { btnVirtualKey7_->setText(event.wttext()); btnVirtualKey7_->show(); }
+      if (event.iflyvalue() == 8) { btnVirtualKey8_->setText(event.wttext()); btnVirtualKey8_->show(); }
+      if (event.iflyvalue() == 9) { btnVirtualKey9_->setText(event.wttext()); btnVirtualKey9_->show(); }
+      if (event.iflyvalue() == 10) { btnVirtualKey0_->setText(event.wttext()); btnVirtualKey0_->show(); }
+  }
 
-//  if (event.type() == WebUiEvent::GsxTextText)
-//  {
-//      txtGSXText_->setText(event.wttext());
-//  }
+  if (event.type() == WebUiEvent::GsxTextText)
+  {
+      txtGSXText_->setText(event.wttext());
+  }
 
 
 }
