@@ -369,23 +369,22 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("GSX / Sode Menu"));
     GSXBox->addStyleClass("fieldset-header");
 
-    auto gsxTable = GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WTable>());
-    gsxTable->setWidth(Wt::WLength("100%"));
+    GSXBox->addWidget(std::move(btnVirtualKeyF10));
+    GSXBox->addWidget(std::move(btnVirtualKeyF11));
+    GSXBox->addWidget(std::move(btnVirtualKeyF12));
 
-    gsxTable->elementAt(0, 0)->addWidget(std::move(btnVirtualKey1));
-    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey2));
-    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey3));
-    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey4));
-    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKey5));
-    gsxTable->elementAt(1, 1)->addWidget(std::move(btnVirtualKey6));
-    gsxTable->elementAt(2, 1)->addWidget(std::move(btnVirtualKey7));
-    gsxTable->elementAt(3, 1)->addWidget(std::move(btnVirtualKey8));
-    gsxTable->elementAt(0, 2)->addWidget(std::move(btnVirtualKey9));
-    gsxTable->elementAt(1, 2)->addWidget(std::move(btnVirtualKey0));
-    gsxTable->elementAt(0, 3)->addWidget(std::move(btnVirtualKeyF10));
-    gsxTable->elementAt(1, 3)->addWidget(std::move(btnVirtualKeyF11));
-    gsxTable->elementAt(2, 3)->addWidget(std::move(btnVirtualKeyF12));
+    GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
 
+    GSXBox->addWidget(std::move(btnVirtualKey1));
+    GSXBox->addWidget(std::move(btnVirtualKey2));
+    GSXBox->addWidget(std::move(btnVirtualKey3));
+    GSXBox->addWidget(std::move(btnVirtualKey4));
+    GSXBox->addWidget(std::move(btnVirtualKey5));
+    GSXBox->addWidget(std::move(btnVirtualKey6));
+    GSXBox->addWidget(std::move(btnVirtualKey7));
+    GSXBox->addWidget(std::move(btnVirtualKey8));
+    GSXBox->addWidget(std::move(btnVirtualKey9));
+    GSXBox->addWidget(std::move(btnVirtualKey0));
 
     // Create 3 main containers from top to bottom.
 
