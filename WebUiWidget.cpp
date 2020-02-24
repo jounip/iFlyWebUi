@@ -160,6 +160,8 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("");
     txtGSXText_ = txtGSXText.get();
 
+    auto GSXBox = Wt::cpp14::make_unique<Wt::WGroupBox>("Menu");
+    GSXBox_ = GSXBox.get();
 
     // Create Ground tab 
     auto groundBox = groundContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Ground Equipment"));
@@ -366,25 +368,26 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
 
     // GSX Tab starts here
 
-    auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("GSX / Sode Menu"));
-    GSXBox->addStyleClass("fieldset-header");
+    auto ButtonsBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Virtual keys"));
+    ButtonsBox->addStyleClass("fieldset-header");
 
-    GSXBox->addWidget(std::move(btnVirtualKeyF10));
-    GSXBox->addWidget(std::move(btnVirtualKeyF11));
-    GSXBox->addWidget(std::move(btnVirtualKeyF12));
+    ButtonsBox->addWidget(std::move(btnVirtualKeyF10));
+    ButtonsBox->addWidget(std::move(btnVirtualKeyF11));
+    ButtonsBox->addWidget(std::move(btnVirtualKeyF12));
 
-    GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WBreak>());
+    GSXContainer->addWidget(std::move(GSXBox));
+    GSXBox_->addStyleClass("fieldset-header");
 
-    GSXBox->addWidget(std::move(btnVirtualKey1));
-    GSXBox->addWidget(std::move(btnVirtualKey2));
-    GSXBox->addWidget(std::move(btnVirtualKey3));
-    GSXBox->addWidget(std::move(btnVirtualKey4));
-    GSXBox->addWidget(std::move(btnVirtualKey5));
-    GSXBox->addWidget(std::move(btnVirtualKey6));
-    GSXBox->addWidget(std::move(btnVirtualKey7));
-    GSXBox->addWidget(std::move(btnVirtualKey8));
-    GSXBox->addWidget(std::move(btnVirtualKey9));
-    GSXBox->addWidget(std::move(btnVirtualKey0));
+    GSXBox_->addWidget(std::move(btnVirtualKey1));
+    GSXBox_->addWidget(std::move(btnVirtualKey2));
+    GSXBox_->addWidget(std::move(btnVirtualKey3));
+    GSXBox_->addWidget(std::move(btnVirtualKey4));
+    GSXBox_->addWidget(std::move(btnVirtualKey5));
+    GSXBox_->addWidget(std::move(btnVirtualKey6));
+    GSXBox_->addWidget(std::move(btnVirtualKey7));
+    GSXBox_->addWidget(std::move(btnVirtualKey8));
+    GSXBox_->addWidget(std::move(btnVirtualKey9));
+    GSXBox_->addWidget(std::move(btnVirtualKey0));
 
     // Create 3 main containers from top to bottom.
 
@@ -814,13 +817,9 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
 
   if (event.type() == WebUiEvent::GsxMenuText)
   {
-//      Wt::WString _temptitle;
-//
-//      if (event.iflyvalue() == 0) {
-//          _temptitle = "GSX / Sode Menu / ";
-//          _temptitle = _temptitle + event.wttext();
-//          gsxBox_->setTitle(_temptitle);
-//      }
+      if (event.iflyvalue() == 0) {
+          GSXBox_->setTitle(event.wttext());
+      }
 
       if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }
       if (event.iflyvalue() == 2) { btnVirtualKey2_->setText(event.wttext()); btnVirtualKey2_->show(); }

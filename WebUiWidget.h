@@ -94,6 +94,9 @@ private:
 
   Wt::WText* txtGSXText_;
 
+  Wt::WGroupBox* GSXBox_;
+
+
   /* called from another session */
   void processWebUiEvent(const WebUiEvent& event);
 
