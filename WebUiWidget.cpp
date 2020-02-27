@@ -408,7 +408,7 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     leftMenu_->addItem("Ground", std::move(groundContainer));
     leftMenu_->addItem("Weather", std::move(weatherContainer));
     leftMenu_->addItem("Info", std::move(infoContainer));
-    leftMenu_->addItem("GSX", std::move(GSXContainer));
+    leftMenu_->addItem("Menu", std::move(GSXContainer));
 
     // status row starts here
 
@@ -569,21 +569,6 @@ void WebUiWidget::pressedVirtualKeyF11()
 void WebUiWidget::pressedVirtualKeyF12()
 {
     server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F12);
-}
-
-void WebUiWidget::hideVirtualButtons()
-{
-    gsxBox_->setTitle("GSX / Sode Buttons");
-    btnVirtualKey1_->hide();
-    btnVirtualKey2_->hide();
-    btnVirtualKey3_->hide();
-    btnVirtualKey4_->hide();
-    btnVirtualKey5_->hide();
-    btnVirtualKey6_->hide();
-    btnVirtualKey7_->hide();
-    btnVirtualKey8_->hide();
-    btnVirtualKey9_->hide();
-    btnVirtualKey0_->hide();
 }
 
 WebUiWidget::~WebUiWidget()
@@ -815,10 +800,26 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
       infoBox_->setTitle(event.wttext());
   }
 
+  if (event.type() == WebUiEvent::GsxMenuHide)
+  {
+      btnVirtualKey1_->hide();
+      btnVirtualKey2_->hide();
+      btnVirtualKey3_->hide();
+      btnVirtualKey4_->hide();
+      btnVirtualKey5_->hide();
+      btnVirtualKey6_->hide();
+      btnVirtualKey7_->hide();
+      btnVirtualKey8_->hide();
+      btnVirtualKey9_->hide();
+      btnVirtualKey0_->hide();
+      GSXBox_->hide();
+  }
+
   if (event.type() == WebUiEvent::GsxMenuText)
   {
       if (event.iflyvalue() == 0) {
           GSXBox_->setTitle(event.wttext());
+          GSXBox_->show();
       }
 
       if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }

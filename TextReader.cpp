@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "TextReader.h"
+#include "gsxStruct.h"
 
 extern std::string gsxTextPath;
 
@@ -13,20 +14,17 @@ TextReader::~TextReader()
 {
 }
 
-std::string TextReader::GetTextItem()
+bool TextReader::GetTextItem(gsxlinesStruct* _gsxInternal)
 {
 	bool _newdata;
 	_newdata = UpdateTextItems();
 
 	if (_newdata)
 	{
-		return GsxTextText;
-	}
-	else
-	{
-		return "";
+		_gsxInternal->txtGSXText = gsxLines.txtGSXText;
 	}
 
+	return _newdata;
 
 }
 
@@ -92,9 +90,9 @@ void TextReader::ReadFile()
 
 	if (filePlan)
 	{
-		GsxTextText = "";
+		gsxLines.txtGSXText = "";
 
-		getline(filePlan, GsxTextText);
+		getline(filePlan, gsxLines.txtGSXText);
 	}
 
 	filePlan.close();

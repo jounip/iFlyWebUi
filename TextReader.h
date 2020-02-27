@@ -8,11 +8,13 @@ class TextReader
 public:
 	TextReader();
 	~TextReader();
-	std::string GetTextItem();
+
+	bool GetTextItem(gsxlinesStruct*);
 
 private:
 	bool UpdateTextItems();
 	void ReadFile();
-	std::string GsxTextText;
+	gsxlinesStruct gsxLines;
+
 };
 

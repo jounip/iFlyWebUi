@@ -16,5 +16,6 @@ struct gsxlinesStruct
 	std::string txtMenuItem8;
 	std::string txtMenuItem9;
 	std::string txtMenuItem10;
+	std::string txtGSXText;
 };
 
