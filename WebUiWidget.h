@@ -50,6 +50,7 @@ private:
   Wt::WPushButton* btnVirtualKey0_;
   Wt::WPushButton* btnVirtualKeyF10_;
   Wt::WPushButton* btnVirtualKeyF11_;
+  Wt::WPushButton* btnVirtualKeyF12_;
 
   Wt::WGroupBox* infoBox_;
   Wt::WGroupBox* gsxBox_;

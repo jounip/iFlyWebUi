@@ -450,6 +450,8 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnVirtualKey8_->clicked().connect(this, &WebUiWidget::pressedVirtualKey8);
     btnVirtualKey9_->clicked().connect(this, &WebUiWidget::pressedVirtualKey9);
     btnVirtualKey0_->clicked().connect(this, &WebUiWidget::pressedVirtualKey0);
+    btnVirtualKeyF10_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF10);
+    btnVirtualKeyF11_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF11);
     btnVirtualKeyF12_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF12);
 
 
