@@ -57,18 +57,19 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnPushBack4_->setStyleClass("btn-danger");
 
     // Setup needed buttons for GSX tab  
-    auto btnVirtualKey1 = Wt::cpp14::make_unique<Wt::WPushButton>("1 - Reposition here at current gate");
-    auto btnVirtualKey2 = Wt::cpp14::make_unique<Wt::WPushButton>("2 - Runway 4L Start");
-    auto btnVirtualKey3 = Wt::cpp14::make_unique<Wt::WPushButton>("3 - Runway 4R Start");
-    auto btnVirtualKey4 = Wt::cpp14::make_unique<Wt::WPushButton>("4 - Runway 22L Start ");
-    auto btnVirtualKey5 = Wt::cpp14::make_unique<Wt::WPushButton>("5 - Runway 22R Start ");
-    auto btnVirtualKey6 = Wt::cpp14::make_unique<Wt::WPushButton>("6 - Runway 33 Start ");
-    auto btnVirtualKey7 = Wt::cpp14::make_unique<Wt::WPushButton>("7 - Dock	(14 suitable parkings) ");
-    auto btnVirtualKey8 = Wt::cpp14::make_unique<Wt::WPushButton>("8 - Gate	(42 suitable parkings) ");
-    auto btnVirtualKey9 = Wt::cpp14::make_unique<Wt::WPushButton>("9 - SE Parking	(21 suitable parkings) ");
-    auto btnVirtualKey0 = Wt::cpp14::make_unique<Wt::WPushButton>("0 - SW Parking	(13 suitable parkings) ");
-    auto btnVirtualKeyF10 = Wt::cpp14::make_unique<Wt::WPushButton>("Open/Close SODE Menu");
-    auto btnVirtualKeyF11 = Wt::cpp14::make_unique<Wt::WPushButton>("Open/Close GSX Menu");
+    auto btnVirtualKey1 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 1");
+    auto btnVirtualKey2 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 2");
+    auto btnVirtualKey3 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 3");
+    auto btnVirtualKey4 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 4");
+    auto btnVirtualKey5 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 5");
+    auto btnVirtualKey6 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 6");
+    auto btnVirtualKey7 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 7");
+    auto btnVirtualKey8 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 8");
+    auto btnVirtualKey9 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 9");
+    auto btnVirtualKey0 = Wt::cpp14::make_unique<Wt::WPushButton>("Send 0");
+    auto btnVirtualKeyF10 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F10");
+    auto btnVirtualKeyF11 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F11");
+    auto btnVirtualKeyF12 = Wt::cpp14::make_unique<Wt::WPushButton>("Send F12");
 
     btnVirtualKey1_ = btnVirtualKey1.get();
     btnVirtualKey2_ = btnVirtualKey2.get();
@@ -82,6 +83,7 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnVirtualKey0_ = btnVirtualKey0.get();
     btnVirtualKeyF10_ = btnVirtualKeyF10.get();
     btnVirtualKeyF11_ = btnVirtualKeyF11.get();
+    btnVirtualKeyF12_ = btnVirtualKeyF12.get();
 
     // Setup default Weather text
     auto txtWxrMetarDep = Wt::cpp14::make_unique<Wt::WText>("DEPARTURE AIRPORT IS NOT SET");
@@ -158,6 +160,8 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     auto txtGSXText = Wt::cpp14::make_unique<Wt::WText>("");
     txtGSXText_ = txtGSXText.get();
 
+    auto GSXBox = Wt::cpp14::make_unique<Wt::WGroupBox>("Menu");
+    GSXBox_ = GSXBox.get();
 
     // Create Ground tab 
     auto groundBox = groundContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Ground Equipment"));
@@ -364,24 +368,26 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
 
     // GSX Tab starts here
 
-    auto GSXBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("GSX / Sode Menu"));
-    GSXBox->addStyleClass("fieldset-header");
+    auto ButtonsBox = GSXContainer->addWidget(Wt::cpp14::make_unique<Wt::WGroupBox>("Virtual keys"));
+    ButtonsBox->addStyleClass("fieldset-header");
 
-    auto gsxTable = GSXBox->addWidget(Wt::cpp14::make_unique<Wt::WTable>());
+    ButtonsBox->addWidget(std::move(btnVirtualKeyF10));
+    ButtonsBox->addWidget(std::move(btnVirtualKeyF11));
+    ButtonsBox->addWidget(std::move(btnVirtualKeyF12));
 
-    gsxTable->elementAt(0, 0)->addWidget(std::move(btnVirtualKeyF10));
-    gsxTable->elementAt(1, 0)->addWidget(std::move(btnVirtualKey1));
-    gsxTable->elementAt(2, 0)->addWidget(std::move(btnVirtualKey2));
-    gsxTable->elementAt(3, 0)->addWidget(std::move(btnVirtualKey3));
-    gsxTable->elementAt(4, 0)->addWidget(std::move(btnVirtualKey4));
-    gsxTable->elementAt(5, 0)->addWidget(std::move(btnVirtualKey5));
-    gsxTable->elementAt(0, 1)->addWidget(std::move(btnVirtualKeyF11));
-    gsxTable->elementAt(1, 1)->addWidget(std::move(btnVirtualKey6));
-    gsxTable->elementAt(2, 1)->addWidget(std::move(btnVirtualKey7));
-    gsxTable->elementAt(3, 1)->addWidget(std::move(btnVirtualKey8));
-    gsxTable->elementAt(4, 1)->addWidget(std::move(btnVirtualKey9));
-    gsxTable->elementAt(5, 1)->addWidget(std::move(btnVirtualKey0));
+    GSXContainer->addWidget(std::move(GSXBox));
+    GSXBox_->addStyleClass("fieldset-header");
 
+    GSXBox_->addWidget(std::move(btnVirtualKey1));
+    GSXBox_->addWidget(std::move(btnVirtualKey2));
+    GSXBox_->addWidget(std::move(btnVirtualKey3));
+    GSXBox_->addWidget(std::move(btnVirtualKey4));
+    GSXBox_->addWidget(std::move(btnVirtualKey5));
+    GSXBox_->addWidget(std::move(btnVirtualKey6));
+    GSXBox_->addWidget(std::move(btnVirtualKey7));
+    GSXBox_->addWidget(std::move(btnVirtualKey8));
+    GSXBox_->addWidget(std::move(btnVirtualKey9));
+    GSXBox_->addWidget(std::move(btnVirtualKey0));
 
     // Create 3 main containers from top to bottom.
 
@@ -402,7 +408,7 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     leftMenu_->addItem("Ground", std::move(groundContainer));
     leftMenu_->addItem("Weather", std::move(weatherContainer));
     leftMenu_->addItem("Info", std::move(infoContainer));
-    leftMenu_->addItem("GSX", std::move(GSXContainer));
+    leftMenu_->addItem("Menu", std::move(GSXContainer));
 
     // status row starts here
 
@@ -444,8 +450,7 @@ WebUiWidget::WebUiWidget(WebUiServer& server)
     btnVirtualKey8_->clicked().connect(this, &WebUiWidget::pressedVirtualKey8);
     btnVirtualKey9_->clicked().connect(this, &WebUiWidget::pressedVirtualKey9);
     btnVirtualKey0_->clicked().connect(this, &WebUiWidget::pressedVirtualKey0);
-    btnVirtualKeyF10_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF10);
-    btnVirtualKeyF11_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF11);
+    btnVirtualKeyF12_->clicked().connect(this, &WebUiWidget::pressedVirtualKeyF12);
 
 
     // Connect to server
@@ -561,19 +566,9 @@ void WebUiWidget::pressedVirtualKeyF11()
     server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F11);
 }
 
-void WebUiWidget::hideVirtualButtons()
+void WebUiWidget::pressedVirtualKeyF12()
 {
-    gsxBox_->setTitle("GSX / Sode Buttons");
-    btnVirtualKey1_->hide();
-    btnVirtualKey2_->hide();
-    btnVirtualKey3_->hide();
-    btnVirtualKey4_->hide();
-    btnVirtualKey5_->hide();
-    btnVirtualKey6_->hide();
-    btnVirtualKey7_->hide();
-    btnVirtualKey8_->hide();
-    btnVirtualKey9_->hide();
-    btnVirtualKey0_->hide();
+    server_.sendButtonPress(ID_WEBUI_BUTTON_VIRTUAL_KEY_F12);
 }
 
 WebUiWidget::~WebUiWidget()
@@ -805,32 +800,44 @@ void WebUiWidget::processWebUiEvent(const WebUiEvent& event)
       infoBox_->setTitle(event.wttext());
   }
 
-  //if (event.type() == WebUiEvent::GsxMenuText)
-  //{
-//      Wt::WString _temptitle;
-//
-//      if (event.iflyvalue() == 0) {
-//          _temptitle = "GSX / Sode Menu / ";
-//          _temptitle = _temptitle + event.wttext();
-//          gsxBox_->setTitle(_temptitle);
-//      }
+  if (event.type() == WebUiEvent::GsxMenuHide)
+  {
+      btnVirtualKey1_->hide();
+      btnVirtualKey2_->hide();
+      btnVirtualKey3_->hide();
+      btnVirtualKey4_->hide();
+      btnVirtualKey5_->hide();
+      btnVirtualKey6_->hide();
+      btnVirtualKey7_->hide();
+      btnVirtualKey8_->hide();
+      btnVirtualKey9_->hide();
+      btnVirtualKey0_->hide();
+      GSXBox_->hide();
+  }
 
-//      if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }
-//      if (event.iflyvalue() == 2) { btnVirtualKey2_->setText(event.wttext()); btnVirtualKey2_->show(); }
-//      if (event.iflyvalue() == 3) { btnVirtualKey3_->setText(event.wttext()); btnVirtualKey3_->show(); }
-//      if (event.iflyvalue() == 4) { btnVirtualKey4_->setText(event.wttext()); btnVirtualKey4_->show(); }
-//      if (event.iflyvalue() == 5) { btnVirtualKey5_->setText(event.wttext()); btnVirtualKey5_->show(); }
-//      if (event.iflyvalue() == 6) { btnVirtualKey6_->setText(event.wttext()); btnVirtualKey6_->show(); }
-//      if (event.iflyvalue() == 7) { btnVirtualKey7_->setText(event.wttext()); btnVirtualKey7_->show(); }
-//      if (event.iflyvalue() == 8) { btnVirtualKey8_->setText(event.wttext()); btnVirtualKey8_->show(); }
-//      if (event.iflyvalue() == 9) { btnVirtualKey9_->setText(event.wttext()); btnVirtualKey9_->show(); }
-//      if (event.iflyvalue() == 10) { btnVirtualKey0_->setText(event.wttext()); btnVirtualKey0_->show(); }
-//  }
+  if (event.type() == WebUiEvent::GsxMenuText)
+  {
+      if (event.iflyvalue() == 0) {
+          GSXBox_->setTitle(event.wttext());
+          GSXBox_->show();
+      }
 
-//  if (event.type() == WebUiEvent::GsxTextText)
-//  {
-//      txtGSXText_->setText(event.wttext());
-//  }
+      if (event.iflyvalue() == 1) { btnVirtualKey1_->setText(event.wttext()); btnVirtualKey1_->show(); }
+      if (event.iflyvalue() == 2) { btnVirtualKey2_->setText(event.wttext()); btnVirtualKey2_->show(); }
+      if (event.iflyvalue() == 3) { btnVirtualKey3_->setText(event.wttext()); btnVirtualKey3_->show(); }
+      if (event.iflyvalue() == 4) { btnVirtualKey4_->setText(event.wttext()); btnVirtualKey4_->show(); }
+      if (event.iflyvalue() == 5) { btnVirtualKey5_->setText(event.wttext()); btnVirtualKey5_->show(); }
+      if (event.iflyvalue() == 6) { btnVirtualKey6_->setText(event.wttext()); btnVirtualKey6_->show(); }
+      if (event.iflyvalue() == 7) { btnVirtualKey7_->setText(event.wttext()); btnVirtualKey7_->show(); }
+      if (event.iflyvalue() == 8) { btnVirtualKey8_->setText(event.wttext()); btnVirtualKey8_->show(); }
+      if (event.iflyvalue() == 9) { btnVirtualKey9_->setText(event.wttext()); btnVirtualKey9_->show(); }
+      if (event.iflyvalue() == 10) { btnVirtualKey0_->setText(event.wttext()); btnVirtualKey0_->show(); }
+  }
+
+  if (event.type() == WebUiEvent::GsxTextText)
+  {
+      txtGSXText_->setText(event.wttext());
+  }
 
 
 }

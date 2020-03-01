@@ -33,20 +33,6 @@ bool MenuReader::GetMenuItems(gsxlinesStruct  *_gsxInternal)
 		_gsxInternal->txtMenuItem9 = gsxLines.txtMenuItem9;
 		_gsxInternal->txtMenuItem10 = gsxLines.txtMenuItem10;
 	}
-	else
-	{
-		_gsxInternal->txtMenuSubject = "";
-		_gsxInternal->txtMenuItem1 = "";
-		_gsxInternal->txtMenuItem2 = "";
-		_gsxInternal->txtMenuItem3 = "";
-		_gsxInternal->txtMenuItem4 = "";
-		_gsxInternal->txtMenuItem5 = "";
-		_gsxInternal->txtMenuItem6 = "";
-		_gsxInternal->txtMenuItem7 = "";
-		_gsxInternal->txtMenuItem8 = "";
-		_gsxInternal->txtMenuItem9 = "";
-		_gsxInternal->txtMenuItem10 = "";
-	}
 	return _newdata;
 }
 

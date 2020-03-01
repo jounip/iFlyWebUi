@@ -12,7 +12,7 @@ namespace Wt {
 class WebUiEvent
 {
 public:
-  enum Type { Door, GroundAir, GroundPower, WxrMetarDep, WxrMetarArr, WxrTafDep, WxrTafArr, LatLon, Alt, OnGround, Status, FlightInfo, LastWPT, ActualWPT, NextWPT, Destination, Oooi, Speed, Temperature, GsxMenuText, GsxTextText };
+  enum Type { GsxMenuHide, Door, GroundAir, GroundPower, WxrMetarDep, WxrMetarArr, WxrTafDep, WxrTafArr, LatLon, Alt, OnGround, Status, FlightInfo, LastWPT, ActualWPT, NextWPT, Destination, Oooi, Speed, Temperature, GsxMenuText, GsxTextText };
   Type type() const { return type_; }
   const Wt::WString& wttext() const { return wttext_; }
   const Wt::WString& wttext2() const { return wttext2_; }

@@ -486,6 +486,8 @@ void iFlyConnect::TogglePushBack(int _turn)
 void iFlyConnect::SendVirtualKey(long _virtualkey)
 {
 
+	// fsuipc keypress command
+	long _command = 1070;
 
 	if (fsuipc_status == 0)
 	{
