@@ -21,7 +21,7 @@
 extern HWND hWnd;
 
 // define _iflytest when testing without simulator
-#define _IFLYTEST
+//#define _IFLYTEST
 
 
 iFlyConnect::iFlyConnect()
