@@ -4,8 +4,7 @@ title: Install
 permalink: /install/
 ---
 
-You can install first test build from GitHub releases:
-[iFlyWebUi4v0.1PreRelease.zip](https://github.com/jounip/iFlyWebUi/releases/download/0.1/iFlyWebUi4v0.1PreRelease.zip)
+You can install test builds from GitHub [releases](https://github.com/jounip/iFlyWebUi/releases)
 
 Pre-requirements
 ----------------
@@ -23,6 +22,11 @@ If you are interested only to use the latest build just unzip the downloaded fil
 Remember to run executable always **As Adminstrator** or the connection to ifly does not work.
 
 As always, **DO NOT** install this under Program Files or Program Files(x86). **IT DOES NOT WORK** from there due restriction Microsoft has created.
+
+Enable SSL for fetching weather data
+------------------------------------
+
+Get needed cacert.pem file from [here](https://curl.haxx.se/docs/caextract.html)
 
 Source Code
 -----------
